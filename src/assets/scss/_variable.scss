@@ -139,3 +139,10 @@ $colors: map.merge(
                 ),
                 $colors
 );
+
+/// Mapping
+$ico-color-black: invert(0%) sepia(2%) saturate(7%) hue-rotate(329deg) brightness(102%) contrast(101%);
+$ico-color-white: invert(96%) sepia(100%) saturate(0%) hue-rotate(190deg) brightness(102%) contrast(101%);
+
+.ico-color-black {filter: invert(0%) sepia(2%) saturate(7%) hue-rotate(329deg) brightness(102%) contrast(101%);}
+.ico-color-white {filter: invert(96%) sepia(100%) saturate(0%) hue-rotate(190deg) brightness(102%) contrast(101%);}

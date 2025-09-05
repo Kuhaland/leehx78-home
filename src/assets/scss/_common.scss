@@ -2,11 +2,7 @@
 html, body{height: 100%;}
 
 //// vue
-#app {
-  position:relative;
-  width:100%; height:100%;
-  margin: 0 auto;
-}
+#app { position:relative; width:100%; height:100%; margin: 0 auto;}
 
 //// 기본 설정
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button{margin:0;padding:0}
@@ -34,12 +30,7 @@ input::-webkit-contacts-auto-fill-button {
   visibility:hidden;display:none !important;pointer-events:none;position:absolute;right:0
 }
 
-body{
-  position: relative;
-  -webkit-text-size-adjust: none;
-  min-width:1280px;
-}
-
+body{ position: relative; -webkit-text-size-adjust: none; min-width:1280px;}
 
 a, abbr, address, article, aside, audio, b, blockquote, body, br, button, canvas, caption, cite, code, col, data, datalist, dd, del, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form,
 h1, h2, h3, h4, h5, h6, header, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, main, mark, meter, nav, object, ol, output, p, pre, progress, q, s, samp, section, select, small, span, strong,
@@ -65,45 +56,25 @@ input,textarea{
 input[type="button" i], input[type="submit" i], input[type="reset" i], input[type="file" i]::-webkit-file-upload-button, button {-webkit-appearance: none; -moz-appearance: none; color: inherit; background-color: inherit; border-radius: inherit;}
 
 input, select, button, textarea {
-  //line-height: inherit;
-  appearance: none !important;
+  position: relative;
   max-width: 100%;
-  box-sizing: border-box;
   background: transparent;
+  box-sizing: border-box;
+  appearance: none !important;
+  -webkit-appearance:textfield;
   writing-mode:horizontal-tb !important;
   -webkit-rtl-ordering:logical;
   -webkit-user-select:text;
   cursor:auto;
   font-variant-caps:normal;
   word-spacing:normal;
-  -webkit-appearance:textfield;
-  position: relative;
-  // line-height: normal;
 }
 
 img, svg {display: inline-block; width: auto; height: auto; max-width: 100%;}
 pre{/*white-space: pre-wrap;*/ white-space: pre-line; }
 button, a{cursor: pointer;}
 button, a, input, img, div, span, p{-webkit-tap-highlight-color: rgba(0,0,0,0) !important;}
-
-table{
-  padding:0;
-  border:0;
-  border-spacing:0px;
-  border-collapse:collapse;
-}
-
-
-/* input , select */
-//@media screen and (-webkit-min-device-pixel-ratio:0) {
-//  select:focus,
-//  textarea:focus,
-//  input:focus {
-//    font-size: 16px; zoom: 1;
-//    background: transparent;
-//  }
-//}
-
+table{ padding:0; border:0; border-spacing:0; border-collapse:collapse;}
 select, input[type="text"], input[type="search"], input[type="date"],
 input[type="password"], .container-line input[type="time"], input[type="datetime-local"],
 input[type="tel"], input[type="email"], input[type="number"] {
@@ -119,9 +90,7 @@ input[type="tel"], input[type="email"], input[type="number"] {
   -webkit-appearance:textfield;
   position: relative;
   text-align: start;
-  //line-height: normal;
   cursor:auto;
-  text-align: start;
   border: 0;
   border-radius: 0;
   outline: 0;
@@ -137,24 +106,8 @@ input::-webkit-search-results-decoration { display: none; }
 input[type="checkbox"]:checked:after{content: none;}
 input::placeholder, textarea::placeholder{color:#767676;}
 textarea{-webkit-appearance: none;-moz-appearance: none;appearance: none;padding: 0;box-sizing: border-box;background: transparent;}
-
-//input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder { /* WebKit browsers */ color:transparent; transition: color .15s ease-out; }
-//input:focus:-moz-placeholder, textarea:focus:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color:transparent; transition: color .15s ease-out; }
-//input:focus::-moz-placeholder, textarea:focus::-moz-placeholder { /* Mozilla Firefox 19+ */ color:transparent; transition: color .15s ease-out; }
-//input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder { /* Internet Explorer 10+ */ color:transparent; transition: color .15s ease-out; }
-
-input[disabled],
-select[disabled='disabled']{/* color: #ccc $imt; */ opacity:1; -webkit-text-fill-color: #ccc }
-
-//input:-webkit-autofill,
-//textarea:-webkit-autofill,
-//select:-webkit-autofill{
-//  &, &:hover, &:focus, &:active {-webkit-box-shadow: 0 0 0px 1000px $color-black inset $imt;}
-//}
-
-// 드래그 시 색상
+input[disabled], select[disabled='disabled']{/* color: #ccc $imt; */ opacity:1; -webkit-text-fill-color: #ccc }
 ::selection {background-color: rgba($color-black,0.4);}
-
 
 //// position
 .ps-a {position: absolute $imt;}
@@ -163,15 +116,15 @@ select[disabled='disabled']{/* color: #ccc $imt; */ opacity:1; -webkit-text-fill
 .ps-s {position: sticky $imt;}
 
 /// Layout
-[class*="layout-"] {
+[class*="flex-"] {
   display: flex;
   &.inline { display: inline-flex;}
 }
-[class*="layout-column-"] {
+[class*="flex-column-"] {
   flex-direction: column;
   &.center { align-items: center;}
 }
-[class*="layout-row-"]{
+[class*="flex-row-"]{
   align-items: center;
   &.center { justify-content: center;}
 }
@@ -181,12 +134,12 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 @each $pad-tb in $padding-tb-list {
   @each $pad-lr in $padding-lr-list {
     @each $gap in $gap-list {
-      .layout-column-#{$pad-tb}-#{$pad-lr}-#{$gap} {
+      .flex-column-#{$pad-tb}-#{$pad-lr}-#{$gap} {
         gap: #{$gap}px;
         padding-top: #{$pad-tb}px $imt; padding-bottom: #{$pad-tb}px $imt;
         padding-left: #{$pad-lr}px $imt; padding-right: #{$pad-lr}px $imt;
       }
-      .layout-row-#{$pad-tb}-#{$pad-lr}-#{$gap} {
+      .flex-row-#{$pad-tb}-#{$pad-lr}-#{$gap} {
         gap: #{$gap}px;
         padding-top: #{$pad-tb}px $imt; padding-bottom: #{$pad-tb}px $imt;
         padding-left: #{$pad-lr}px $imt; padding-right: #{$pad-lr}px $imt;
@@ -332,11 +285,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 @for $i from 1 through 1600 {
   .max-hp-#{$i} {max-height:0px  + $i $imt;}
 }
-.min-hp-1382 { min-height: 1382px $imt;}
-.min-hp-1600 { min-height: 1600px $imt;}
-.max-hp-1540 { max-height: 1540px $imt;}
-.max-hp-1600 { max-height: 1600px $imt;}
-.max-hp-1240 { max-height: 1240px $imt;}
 
 //// overflow
 .overflow-h{overflow: hidden $imt;}
@@ -516,10 +464,10 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .lh-64r {line-height: 6.4rem $imt;}
 
 //// Letter Spacing
-.ls-m-02 { letter-spacing: -0.28px;}
-.ls-m-04 { letter-spacing: -0.48px;}
+.ls-m-02 { letter-spacing: -0.2px;}
+.ls-m-04 { letter-spacing: -0.4px;}
 .ls-m-06 { letter-spacing: -0.6px;}
-.ls-m-07 { letter-spacing: -0.72px;}
+.ls-m-07 { letter-spacing: -0.7px;}
 .ls-m-10 { letter-spacing: -1.0px;}
 .ls-m-11 { letter-spacing: -1.1px;}
 .ls-m-12 { letter-spacing: -1.2px;}
@@ -535,7 +483,7 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 //// text-shadow
 .text-border{text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
 .text-underline{text-decoration: underline $imt;}
-.text-linethrough{text-decoration: line-through $imt;}
+.text-line-through{text-decoration: line-through $imt;}
 .text-uppercase {text-transform: uppercase;}
 
 //// text-line
@@ -552,7 +500,7 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .break-all{word-break: break-all $imt;}
 .break-keep{word-break: keep-all $imt;}
 .ws-nowrap{white-space: nowrap $imt;}
-.ws-nomal{white-space: normal $imt;}
+.ws-normal{white-space: normal $imt;}
 
 //// cursor
 .cursor-pointer{cursor: pointer $imt;}
@@ -570,17 +518,13 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 @for $i from 10 through 50 {
   .bs-#{$i} {background-size: 0px + $i $imt;}
 }
-.bs-6 {background-size: 6px $imt;}
-.bs-54 {background-size: 54px $imt;}
-.bs-62 {background-size: 62px $imt;}
-.bs-80 {background-size: 80px $imt;}
 .bg-img{background-repeat: no-repeat;background-size: cover;background-position: center;}
 .bs-cover{background-size: cover $imt;}
 .bp-center{background-position: center $imt;}
 .bg-fixed{background-attachment: fixed $imt;}
-.bg-grdient-type-1{background-image: linear-gradient(109deg, #172030 11%, #023185 83%, #347eff 111%);}
+.bg-gradient-type1{background-image: linear-gradient(109deg, #172030 11%, #023185 83%, #347eff 111%);}
 .bg-transparent{background-color: transparent $imt;}
-.bg-white-o1{background-color: rgba(255, 255, 255, 0.10);}
+.bg-white-01{background-color: rgba(255, 255, 255, 0.10);}
 .bg-black-05{background-color: rgba(0, 0, 0, 0.50);}
 
 .translateCenter{transform: translate(-50%, -50%) $imt;}
@@ -778,27 +722,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 
 .full-max-height { height: 0 $imt; min-height: 100% $imt;}
 .full-max-width { width: 0 $imt; min-width: 100% $imt;}
-.hp-calc-46 { height: calc(100% - 46px) $imt;}
-.min-hp-calc-122 { min-height: calc(100% - 122px) $imt;}
-.min-hp-calc-p-144 { min-height: calc(100% + 144px) $imt;}
-.min-hp-calc-p-252 { min-height: calc(100% + 252px) $imt;}
-.min-hp-calc-p-293 { min-height: calc(100% + 293px) $imt;}
-.min-hp-calc-p-358 { min-height: calc(100% + 358px) $imt;}
-.min-hp-calc-p-384 { min-height: calc(100% + 384px) $imt;}
-.min-hp-calc-p-428 { min-height: calc(100% + 428px) $imt;}
-.min-hp-calc-p-458 { min-height: calc(100% + 458px) $imt;}
-.min-hp-calc-p-494 { min-height: calc(100% + 494px) $imt;}
-.min-hp-calc-p-560 { min-height: calc(100% + 560px) $imt;}
-
-.max-hp-calc-122 { max-height: calc(100% - 122px) $imt;}
-.max-hp-calc-p-144 { max-height: calc(100% + 144px) $imt;}
-.max-hp-calc-p-252 { max-height: calc(100% + 252px) $imt;}
-.max-hp-calc-p-358 { max-height: calc(100% + 358px) $imt;}
-.max-hp-calc-p-384 { max-height: calc(100% + 384px) $imt;}
-.max-hp-calc-p-428 { max-height: calc(100% + 428px) $imt;}
-.max-hp-calc-p-458 { max-height: calc(100% + 458px) $imt;}
-.max-hp-calc-p-494 { max-height: calc(100% + 494px) $imt;}
-.max-hp-calc-p-560 { max-height: calc(100% + 560px) $imt;}
 
 ////// Animation
 .transition-transform {transition: transform 0.3s;}
