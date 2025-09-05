@@ -1,0 +1,19 @@
+////// icon
+[class*="ico-"]{
+  display: inline-block; width: 24px; height: 24px;
+  background-repeat: no-repeat; background-position: center; background-size: 24px; text-indent: -9999px;
+}
+
+@mixin ico-svg($name, $path: "@/assets/icon/", $format: "svg") {
+  background-image: url("#{$path}#{$name}.#{$format}");
+}
+@mixin ico-png($name, $path: "@/assets/icon/", $format: "png") {
+  background-image: url("#{$path}#{$name}.#{$format}");
+}
+
+/// Common
+.ico-arrow-next { @include ico-svg('/ico-arrow-next');}
+.ico-arrow-prev { @include ico-svg('/ico-arrow-prev');}
+.ico-arrow-up { @include ico-svg('/ico-arrow-up');}
+.ico-arrow-down { @include ico-svg('/ico-arrow-down');}
+.ico-reload { @include ico-svg('/ico-reload');}
