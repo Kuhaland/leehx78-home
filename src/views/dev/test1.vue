@@ -1,7 +1,7 @@
 <template>
+  <h2>Scroll Down</h2>
   <div class="flex-column- page-container bg-grey700">
-    <h2>Scroll Down</h2>
-    <div class="flex-column-">
+    <div class="box-group">
       <div class="box"></div>
       <div class="box"></div>
       <div class="box"></div>
@@ -50,7 +50,13 @@ const back = () => {
 
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
-h2, .box {margin-bottom: 100vh;}
-h2 {padding-top: 30px; font-size: 30px; font-weight: 700; color: $color-white; text-align: center;}
-.box {display: inline-block; width: 100px; height: 100px; background-color: green;}
+h2 {
+  position: fixed; top: 20px; left: 50%; z-index: 1;
+  padding-top: 30px; font-size: 30px; font-weight: 700; color: $color-white; text-align: center;
+  transform: translateX(-50%);
+}
+.box-group{
+  display: flex; flex-direction: column; padding-top: 100vh;
+  .box {display: inline-block; width: 100px; height: 100px; margin-bottom: 100vh; background-color: green;}
+}
 </style>
