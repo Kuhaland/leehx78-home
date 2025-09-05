@@ -1,9 +1,11 @@
 <template>
-  <div class="layout-column- page-container bg-grey800">
-    <h2>Scroll down</h2>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
+  <div class="flex-column- page-container bg-grey700">
+    <h2>Scroll Down</h2>
+    <div class="flex-column-">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
   </div>
   <bottom-navi/>
 </template>
