@@ -1,0 +1,141 @@
+@charset "utf-8";
+@use 'sass:map';
+@use 'sass:string';
+
+$font-size-base: 1rem !default;
+$font-size-sm:  $font-size-base * .875 !default;
+$font-size-lg:  $font-size-base * 1.25 !default;
+
+
+// 글자 두께
+$font-weight-base: 400 !default;
+$font-weight-300: 300 !default;
+$font-weight-400: 400 !default;
+$font-weight-600: 500 !default;
+$font-weight-600: 600 !default;
+$font-weight-700: 700 !default;
+
+
+// h1 ~ h6 태그
+$h1-font-size: $font-size-base + 3.8rem !default;
+$h2-font-size: $font-size-base + 3rem !default;
+$h3-font-size: $font-size-base + 2.8rem !default;
+$h4-font-size: $font-size-base + 2.6rem !default;
+$h5-font-size: $font-size-base + 2.4rem !default;
+$h6-font-size: $font-size-base + 2.2rem !default;
+
+$p1-font-size: $font-size-base + 1rem !default;
+$p2-font-size: $font-size-base + .8rem !default;
+$p3-font-size: $font-size-base + .6rem !default;
+$p4-font-size: $font-size-base + .4rem  !default;
+$p5-font-size: $font-size-base + .3rem !default;
+$p6-font-size: $font-size-base + .2rem !default;
+$p7-font-size: $font-size-base + .1rem !default;
+$p8-font-size: $font-size-base  !default;
+
+
+$h-font-sizes: (
+        1: $h1-font-size,
+        2: $h2-font-size,
+        3: $h3-font-size,
+        4: $h4-font-size,
+        5: $h5-font-size,
+        6: $h6-font-size
+) !default;
+
+$p-font-sizes: (
+        1: $p1-font-size,
+        2: $p2-font-size,
+        3: $p3-font-size,
+        4: $p4-font-size,
+        5: $p5-font-size,
+        6: $p6-font-size,
+        7: $p7-font-size,
+        8: $p8-font-size
+) !default;
+
+.test-font{
+  font-size: map.get($p-font-sizes,8);
+}
+
+/********** color variable **********/
+// Primary
+$color-blue500: #0B7FFF !default;
+$color-blue400: #268DFF !default;
+$color-blue300: #219AFF !default;
+$color-blue200: #3FA9FF !default;
+$color-blue100: #63B9FF !default;
+$color-blue50: #7ACFFF !default;
+$color-blue40: #EBF6FF !default;
+$color-blue30: #F6FCFF !default;
+
+// Layout
+$color-black: #000000 !default;
+$color-grey800: #2D2F34 !default;
+$color-grey700: #484C54 !default;
+$color-grey600: #6F737A !default;
+$color-grey500: #8B929A !default;
+$color-grey400: #AAB1BC !default;
+$color-grey300: #BDC5D0 !default;
+$color-grey200: #CDD4DE !default;
+$color-grey100: #DDE3EC !default;
+$color-grey90: #EFF3F8 !default;
+$color-grey80: #F2F7FF !default;
+$color-grey70: #F8F9FC !default;
+$color-white: #FFF !default;
+
+// status
+$color-green500: #25CC7B !default;
+$color-pink500: #FF4264 !default;
+$color-brown500: #E88E00 !default;
+
+
+/*
+* TextField
+*/
+
+
+
+  // important
+$imt : string.unquote('!important');
+
+// item length
+$itemLength : 1000;
+
+/********** color variable **********/
+
+// UI Color
+$color-f2f7ff: #f2f7ff !default;
+
+$colors: () !default;
+$colors: map.merge(
+                (
+                        "f2f7ff": $color-f2f7ff,
+
+                        "blue500":  $color-blue500,
+                        "blue400":  $color-blue400,
+                        "blue300":  $color-blue300,
+                        "blue200":  $color-blue200,
+                        "blue100":  $color-blue100,
+                        "blue50":   $color-blue50,
+                        "blue40":   $color-blue40,
+                        "blue30":   $color-blue30,
+                        "black":  $color-black,
+                        "grey800":  $color-grey800,
+                        "grey700":  $color-grey700,
+                        "grey600":  $color-grey600,
+                        "grey500":  $color-grey500,
+                        "grey400":  $color-grey400,
+                        "grey300":  $color-grey300,
+                        "grey200":  $color-grey200,
+                        "grey100":  $color-grey100,
+                        "grey90":   $color-grey90,
+                        "grey80":   $color-grey80,
+                        "grey70":   $color-grey70,
+                        "white":    $color-white,
+                        "green500": $color-green500,
+                        "pink500":  $color-pink500,
+                        "brown500": $color-brown500,
+                ),
+                $colors
+);

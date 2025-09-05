@@ -1,0 +1,15 @@
+@use './variable' as *;
+
+@each $color, $value in $colors {
+  .fc-#{$color}{
+    color: #{$value} $imt;
+  }
+  .bg-#{$color}{
+    background-color: #{$value} $imt;
+  }
+}
+
+/* background-color */
+.bg-n{background: none $imt;}
+.bg-transparent{background-color: transparent;}
+
