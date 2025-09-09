@@ -1,6 +1,6 @@
 <template>
   <h2>Scroll Down</h2>
-  <div class="flex-column- page-container bg-grey700">
+  <div class="flex-column- page-container bg-grey-700">
     <div class="box-group">
       <div class="box"></div>
       <div class="box"></div>
@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: 'Test1',
+  name: 'SampleScroll',
 };
 </script>
 <script setup>
@@ -51,12 +51,12 @@ const back = () => {
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
 h2 {
-  position: fixed; top: 20px; left: 50%; z-index: 1;
-  padding-top: 30px; font-size: 30px; font-weight: 700; color: $color-white; text-align: center;
+  position: fixed; top: 2.0rem; left: 50%; z-index: 1;
+  padding-top: 3.0rem; font-size: 3.0rem; font-weight: 700; color: color(white); text-align: center;
   transform: translateX(-50%);
 }
 .box-group{
   display: flex; flex-direction: column; padding-top: 100vh;
-  .box {display: inline-block; width: 100px; height: 100px; margin-bottom: 100vh; background-color: green;}
+  .box {display: inline-block; width: 10.0rem; height: 10.0rem; margin-bottom: 100vh; background-color: green;}
 }
 </style>

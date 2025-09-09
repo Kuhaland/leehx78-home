@@ -1,113 +1,4 @@
 @use './variable' as *;
-html, body{height: 100%;}
-
-//// vue
-#app { position:relative; width:100%; height:100%; margin: 0 auto;}
-
-//// 기본 설정
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button{margin:0;padding:0}
-
-fieldset,img{border:0 none}
-
-dl,ul,ol,menu,li{list-style:none}
-
-blockquote, q{quotes:none}
-blockquote:before, blockquote:after,q:before, q:after{content:'';content:none}
-
-img {object-position: center;object-fit: cover; max-width: 100%;}
-
-address,caption,cite,code,dfn,em,var{font-style:normal;font-weight:normal}
-
-button{border:0 none;border-radius:0;background-color:transparent;cursor:pointer}
-
-a{color:$color-black;text-decoration:none}
-a:active, a:hover{text-decoration:none}
-a:active{background-color:transparent}
-
-input,select,textarea,button{vertical-align:middle}
-input::-ms-clear{display:none}
-input::-webkit-contacts-auto-fill-button {
-  visibility:hidden;display:none !important;pointer-events:none;position:absolute;right:0
-}
-
-body{ position: relative; -webkit-text-size-adjust: none; min-width:1280px;}
-
-a, abbr, address, article, aside, audio, b, blockquote, body, br, button, canvas, caption, cite, code, col, data, datalist, dd, del, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form,
-h1, h2, h3, h4, h5, h6, header, hr, html, i, iframe, img, input, ins, kbd, label, legend, li, main, mark, meter, nav, object, ol, output, p, pre, progress, q, s, samp, section, select, small, span, strong,
-sub, sup, table, td, textarea, th, time, u, ul, var, video{
-  box-sizing: border-box;
-}
-
-/* !! :focus 이슈 처리 !! */
-//button, input, select, button:focus, input:focus, select:focus, textarea{outline: none;}
-@-moz-document url-prefix() {
-  button, input, select, button:focus, input:focus, select:focus, textarea{outline: none;}
-}
-/* Remove outline for non-keyboard :focus */
-*:focus:not(:focus-visible) {outline: none;}
-/* Optional: Customize .focus-visible */
-a, button, [class*="button"]{
-  &:focus-visible {outline:$color-black auto 1px !important;}
-}
-input,textarea{
-  &:focus-visible{outline: none !important;}
-}
-
-input[type="button" i], input[type="submit" i], input[type="reset" i], input[type="file" i]::-webkit-file-upload-button, button {-webkit-appearance: none; -moz-appearance: none; color: inherit; background-color: inherit; border-radius: inherit;}
-
-input, select, button, textarea {
-  position: relative;
-  max-width: 100%;
-  background: transparent;
-  box-sizing: border-box;
-  appearance: none !important;
-  -webkit-appearance:textfield;
-  writing-mode:horizontal-tb !important;
-  -webkit-rtl-ordering:logical;
-  -webkit-user-select:text;
-  cursor:auto;
-  font-variant-caps:normal;
-  word-spacing:normal;
-}
-
-img, svg {display: inline-block; width: auto; height: auto; max-width: 100%;}
-pre{/*white-space: pre-wrap;*/ white-space: pre-line; }
-button, a{cursor: pointer;}
-button, a, input, img, div, span, p{-webkit-tap-highlight-color: rgba(0,0,0,0) !important;}
-table{ padding:0; border:0; border-spacing:0; border-collapse:collapse;}
-select, input[type="text"], input[type="search"], input[type="date"],
-input[type="password"], .container-line input[type="time"], input[type="datetime-local"],
-input[type="tel"], input[type="email"], input[type="number"] {
-  appearance: none;
-  max-width: 100%;
-  box-sizing: border-box;
-  background: transparent;
-  writing-mode:horizontal-tb ;
-  -webkit-rtl-ordering:logical;
-  -webkit-user-select:text;
-  font-variant-caps:normal;
-  word-spacing:normal;
-  -webkit-appearance:textfield;
-  position: relative;
-  text-align: start;
-  cursor:auto;
-  border: 0;
-  border-radius: 0;
-  outline: 0;
-}
-
-button {-webkit-appearance: none; -moz-appearance: none; color: inherit; background: none; border-radius: inherit;}
-
-/* search decoration none */
-input::-webkit-search-decoration,
-input::-webkit-search-cancel-button,
-input::-webkit-search-results-button,
-input::-webkit-search-results-decoration { display: none; }
-input[type="checkbox"]:checked:after{content: none;}
-input::placeholder, textarea::placeholder{color:#767676;}
-textarea{-webkit-appearance: none;-moz-appearance: none;appearance: none;padding: 0;box-sizing: border-box;background: transparent;}
-input[disabled], select[disabled='disabled']{/* color: #ccc $imt; */ opacity:1; -webkit-text-fill-color: #ccc }
-::selection {background-color: rgba($color-black,0.4);}
 
 //// position
 .ps-a {position: absolute $imt;}
@@ -115,7 +6,8 @@ input[disabled], select[disabled='disabled']{/* color: #ccc $imt; */ opacity:1; 
 .ps-f {position: fixed $imt;}
 .ps-s {position: sticky $imt;}
 
-/// Layout
+////// Layout
+/// Flex
 [class*="flex-"] {
   display: flex;
   &.inline { display: inline-flex;}
@@ -147,37 +39,59 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
     }
   }
 }
+/// grid
+.grid-wrap {
+  display: grid;
+  &.imt { display: grid !important;}
+  /// row
+  @for $i from 1 through 50 {
+    &.gc-gap-#{$i} { grid-column-gap: 0px + $i;}
+    &.gc-template-#{$i} { grid-template-columns: repeat($i, 1fr);}
+    &.gc-start-#{$i} { grid-column-start: $i;}
+    &.gc-end-#{$i} { grid-column-end: $i;}
+  }
+  /// column
+  @for $i from 1 through 50 {
+    &.gr-gap-#{$i} { grid-row-gap: 0px + $i;}
+    &.gr-template-#{$i} { grid-template-rows: repeat($i, 1fr);}
+    &.gr-start-#{$i} { grid-row-start: $i;}
+    &.gr-end-#{$i} { grid-row-end: $i;}
+  }
+  /// multi
+  @for $i from 1 through 50 {
+    &.gcr-gap-#{$i} { grid-column-gap: 0px + $i; grid-row-gap: 0px + $i;}
+    &.gcr-template-#{$i} { grid-template: repeat($i, 1fr) / repeat($i, 1fr);}
+    &.gcr-start-#{$i} { grid-column-start: $i; grid-row-start: $i;}
+    &.gcr-end-#{$i} { grid-column-end: $i; grid-row-end: $i;}
+  }
+  &.gaf-column { grid-auto-flow: column;}
+  &.gc-auto-auto { grid-auto-columns: auto;}
+  &.gaf-row { grid-auto-flow: row;}
+  &.gr-auto-auto { grid-auto-rows: auto;}
+  &.justify-item-end { justify-items: end;}
+  &.direction-right { direction: rtl;}
+}
 
-//// top right bottom left
+//// Position
 .top-0 {top: 0 $imt;}
 .top-auto {top: auto $imt;}
+.left-0 {left: 0 $imt;}
+.left-50p {left: 50% $imt;}
+.right-0 {right: 0 $imt;}
+.right-at {right: auto $imt;}
+.right-50p {right: 50% $imt;}
+.bottom-0 {bottom: 0 $imt;}
+.zx-0 {z-index: 0 $imt;}
 
 @for $i from 1 through $itemLength {
   .top-#{$i} {top: 0px + $i $imt;}
   .top-m-#{$i} {top: 0px - $i $imt;}
-}
-.left-0 {left: 0 $imt;}
-.left-50p {left: 50% $imt;}
-@for $i from 1 through $itemLength {
   .left-#{$i} {left: 0px + $i $imt;}
   .left-m-#{$i} {left: 0px - $i $imt;}
-}
-.right-0 {right: 0 $imt;}
-.right-at {right: auto $imt;}
-.right-50p {right: 50% $imt;}
-@for $i from 1 through $itemLength {
   .right-#{$i} {right: 0px + $i $imt;}
   .right-m-#{$i} {right: 0px - $i $imt;}
-}
-.bottom-0 {bottom: 0 $imt;}
-@for $i from 1 through $itemLength {
   .bottom-#{$i} {bottom: 0px + $i $imt;}
   .bottom-m-#{$i} {bottom: 0px - $i $imt;}
-}
-
-//// z index
-.zx-0 {z-index: 0 $imt;}
-@for $i from 1 through $itemLength {
   .zx-#{$i} {z-index: 0 + $i $imt;}
 }
 
@@ -211,12 +125,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .flex-shrink-none{flex-shrink: 0 $imt;}
 .flex-none {flex: none $imt;}
 
-/* flex overflow */
-.flex-overflow-x{
-  overflow-x: auto $imt; width: 0 !important; min-width: 100% !important;
-  .table-group{flex-shrink: 0 !important;}
-}
-
 @for $i from 0 through 100 {
   .flex-#{$i} {flex:0  + $i $imt;}
 }
@@ -226,13 +134,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 @for $i from 1 through 600 {
   .gap-#{$i} { gap: 0px + $i $imt;}
 }
-
-
-//// float
-.ft-r {float: right $imt;}
-.ft-l {float: left $imt;}
-.ft-n {float: none $imt;}
-.clear-left{clear:left $imt;}
 
 //// width
 .min-width-0{min-width: 0 $imt;}
@@ -294,7 +195,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .overflow-xh{overflow-x: hidden $imt;}
 .overflow-yh{overflow-y: hidden $imt;}
 .overflow-unset{overflow-x: unset $imt; overflow-y: unset $imt;}
-//.overflow-x::-webkit-scrollbar {display: none;}
 .overflow-scroll {
   &::-webkit-scrollbar { display:none; width: 14px;}
   &::-webkit-scrollbar-thumb {
@@ -311,7 +211,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
   &::-webkit-scrollbar:horizontal { height: 14px;}
   &:hover::-webkit-scrollbar { display:block;}
 }
-
 .visibility-h{visibility: hidden $imt;}
 .visibility-v{visibility: visible $imt;}
 
@@ -320,31 +219,20 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .plr-0 {padding-left:0 $imt; padding-right: 0 $imt;}
 
 .pa-0 {padding: 0 $imt;}
+.ph-0 {padding-right: 0 $imt; padding-left: 0 $imt;}
+.pv-0 {padding-top: 0 $imt; padding-bottom: 0 $imt;}
+.pt-0 {padding-top: 0 $imt;}
+.pr-0 {padding-right: 0 $imt;}
+.pb-0 {padding-bottom: 0 $imt;}
+.pl-0 {padding-left: 0 $imt;}
+
 @for $i from 1 through $itemLength {
   .pa-#{$i} {padding: 0px + $i $imt;}
-}
-.ph-0 {padding-right: 0 $imt; padding-left: 0 $imt;}
-@for $i from 1 through $itemLength {
   .ph-#{$i} {padding-right: 0px + $i $imt; padding-left: 0px + $i $imt;}
-}
-.pv-0 {padding-top: 0 $imt; padding-bottom: 0 $imt;}
-@for $i from 1 through $itemLength {
   .pv-#{$i} {padding-top: 0px + $i $imt; padding-bottom: 0px + $i $imt;}
-}
-.pt-0 {padding-top: 0 $imt;}
-@for $i from 1 through $itemLength {
   .pt-#{$i} {padding-top: 0px + $i $imt;}
-}
-.pr-0 {padding-right: 0 $imt;}
-@for $i from 1 through $itemLength {
   .pr-#{$i} {padding-right: 0px + $i $imt;}
-}
-.pb-0 {padding-bottom: 0 $imt;}
-@for $i from 1 through $itemLength {
   .pb-#{$i} {padding-bottom: 0px + $i $imt;}
-}
-.pl-0 {padding-left: 0 $imt;}
-@for $i from 1 through $itemLength {
   .pl-#{$i} {padding-left: 0px + $i $imt;}
 }
 
@@ -360,47 +248,30 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .mb-at{margin-bottom: auto $imt;}
 
 .ma-0 {margin: 0 $imt;}
+.mh-0 {margin-right: 0 $imt; margin-left: 0 $imt;}
+.mv-0 {margin-top: 0 $imt; margin-bottom: 0 $imt;}
+.mt-0 {margin-top: 0 $imt;}
+.mr-0 {margin-right: 0 $imt;}
+.mb-0 {margin-bottom: 0 $imt;}
+.ml-0 {margin-left: 0 $imt;}
+.minus-mt-1{margin-top:-1px $imt;}
+.minus-mr-1{margin-right:-1px $imt;}
+.minus-mb-1{margin-bottom:-1px $imt;}
+.minus-ml-1{margin-left:-1px $imt;}
+
 @for $i from 1 through $itemLength {
   .ma-#{$i} {margin: 0px + $i $imt;}
-}
-.mh-0 {margin-right: 0 $imt; margin-left: 0 $imt;}
-@for $i from 1 through $itemLength {
   .mh-#{$i} { margin-right: 0px + $i $imt;  margin-left: 0px + $i $imt;}
-}
-.mv-0 {margin-top: 0 $imt; margin-bottom: 0 $imt;}
-@for $i from 1 through $itemLength {
   .mv-#{$i} { margin-top: 0px + $i $imt;  margin-bottom: 0px + $i $imt;}
-}
-.mt-0 {margin-top: 0 $imt;}
-@for $i from 1 through $itemLength {
   .mt-#{$i} { margin-top: 0px + $i $imt;}
-}
-.mr-0 {margin-right: 0 $imt;}
-@for $i from 1 through $itemLength {
   .mr-#{$i} { margin-right: 0px + $i $imt;}
-}
-.mb-0 {margin-bottom: 0 $imt;}
-@for $i from 1 through $itemLength {
   .mb-#{$i} { margin-bottom: 0px + $i $imt;}
-}
-.ml-0 {margin-left: 0 $imt;}
-@for $i from 1 through $itemLength {
   .ml-#{$i} { margin-left: 0px + $i $imt;}
 }
-.minus-mt-1{margin-top:-1px $imt;}
 @for $i from 2 through $itemLength {
   .minus-mt-#{$i} { margin-top: 0px + -$i $imt;}
-}
-.minus-ml-1{margin-left:-1px $imt;}
-@for $i from 2 through $itemLength {
   .minus-ml-#{$i} { margin-left: 0px + -$i $imt;}
-}
-.minus-mr-1{margin-right:-1px $imt;}
-@for $i from 2 through $itemLength {
   .minus-mr-#{$i} { margin-right: 0px + -$i $imt;}
-}
-.minus-mb-1{margin-bottom:-1px $imt;}
-@for $i from 2 through $itemLength {
   .minus-mb-#{$i} { margin-bottom: 0px + -$i $imt;}
 }
 
@@ -413,7 +284,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 }
 //// font
 .text-none{ text-indent: -9999px $imt;}
-
 .fs-0 {font-size: 0 $imt;}
 @for $i from 1 through 250 {
   .fs-#{$i} { font-size: calc($i / 10) + rem $imt;}
@@ -518,6 +388,8 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 @for $i from 10 through 50 {
   .bs-#{$i} {background-size: 0px + $i $imt;}
 }
+.bg-n{background: none $imt;}
+.bg-transparent{background-color: transparent;}
 .bg-img{background-repeat: no-repeat;background-size: cover;background-position: center;}
 .bs-cover{background-size: cover $imt;}
 .bp-center{background-position: center $imt;}
@@ -543,7 +415,7 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .bd-t-n{border-top:none $imt;}
 .bd-l-n{border-left:none $imt;}
 .bd-r-n{border-right:none $imt;}
-.bd-white{border:1px solid $color-white $imt;}
+.bd-white{border:1px solid color(white) $imt;}
 @each $bdName, $bdColor in $colors {
   @for $i from 1 through 10 {
     .bd-#{$bdName}-#{$i}{border:0px + $i solid #{$bdColor} $imt;}
@@ -661,7 +533,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .opacity-09{opacity: 0.9 $imt;}
 .opacity-10{opacity: 1 $imt;}
 
-
 /* Pseudo el */
 .cf:after{content:''; display: block; clear:both;}
 .after-none:after{ display: none $imt;}
@@ -686,39 +557,6 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 
 /* ani */
 .no-animation{ transition: none $imt; transform: none $imt;}
-
-////// grid
-.grid-wrap {
-  display: grid;
-  &.imt { display: grid !important;}
-  /// row
-  @for $i from 1 through 50 {
-    &.gc-gap-#{$i} { grid-column-gap: 0px + $i;}
-    &.gc-template-#{$i} { grid-template-columns: repeat($i, 1fr);}
-    &.gc-start-#{$i} { grid-column-start: $i;}
-    &.gc-end-#{$i} { grid-column-end: $i;}
-  }
-  /// column
-  @for $i from 1 through 50 {
-    &.gr-gap-#{$i} { grid-row-gap: 0px + $i;}
-    &.gr-template-#{$i} { grid-template-rows: repeat($i, 1fr);}
-    &.gr-start-#{$i} { grid-row-start: $i;}
-    &.gr-end-#{$i} { grid-row-end: $i;}
-  }
-  /// multi
-  @for $i from 1 through 50 {
-    &.gcr-gap-#{$i} { grid-column-gap: 0px + $i; grid-row-gap: 0px + $i;}
-    &.gcr-template-#{$i} { grid-template: repeat($i, 1fr) / repeat($i, 1fr);}
-    &.gcr-start-#{$i} { grid-column-start: $i; grid-row-start: $i;}
-    &.gcr-end-#{$i} { grid-column-end: $i; grid-row-end: $i;}
-  }
-  &.gaf-column { grid-auto-flow: column;}
-  &.gc-auto-auto { grid-auto-columns: auto;}
-  &.gaf-row { grid-auto-flow: row;}
-  &.gr-auto-auto { grid-auto-rows: auto;}
-  &.justify-item-end { justify-items: end;}
-  &.direction-right { direction: rtl;}
-}
 
 .full-max-height { height: 0 $imt; min-height: 100% $imt;}
 .full-max-width { width: 0 $imt; min-width: 100% $imt;}

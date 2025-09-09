@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'Index',
+  name: 'SampleObserver',
 };
 </script>
 <script setup>
