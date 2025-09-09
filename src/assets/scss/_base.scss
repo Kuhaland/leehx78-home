@@ -1,0 +1,13 @@
+@use './variable' as *;
+
+.header-wrap {
+  h1 {font-size: font-size(26); font-weight: 700; color: color(white);}
+  &-item {
+    display: flex; align-items: center;
+    a { font-size: font-size(22); color: color(white);}
+    &-gap {
+      position: relative; top: 0.1rem; width: 0.1rem; height: 1.6rem; margin: 0 1.2rem 0 0.8rem;
+      background-color: color(white); align-self: center;
+    }
+  }
+}

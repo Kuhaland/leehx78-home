@@ -22,7 +22,7 @@ export default {
 </script>
 <script setup>
 import { onMounted, nextTick } from 'vue';
-import TopNavi from "@/components/partial/TopNavi.vue";
+import TopNavi from "@/components/partial/Gnb.vue";
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';
