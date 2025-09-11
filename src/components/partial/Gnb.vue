@@ -18,9 +18,13 @@ export default {
 import { onMounted, ref, nextTick } from "vue";
 import { gsap } from 'gsap';
 
+const props = defineProps({
+  delay: {type: Number, default: 1.2,}
+})
+
 const gnbContent = ref([
-  {title: 'Test1', link: '/dev/SampleScroll'},
-  {title: 'Test2', link: '/dev/SampleTextSplit'},
+  {title: 'Scroll', link: '/dev/SampleScroll'},
+  {title: 'TextSplit', link: '/dev/SampleTextSplit'},
 ])
 
 const gnbRef = ref(null);
@@ -32,7 +36,7 @@ onMounted(async () => {
   gsap.set(gnbRef.value.querySelector('h1'), { x: -50, opacity: 0 });
   gsap.set(gnbRef.value.querySelectorAll('a, .header-item-gap'), { x: 50, opacity: 0 });
 
-  const tl = gsap.timeline({ delay: 1.2 });
+  const tl = gsap.timeline({ delay: props.delay });
 
   tl.to(gnbRef.value, { opacity: 1, duration: 0.2 })
       .to(gnbRef.value.querySelector('h1'), {
@@ -62,8 +66,8 @@ header {
     display: flex; align-items: center;
     a { font-size: font-size(22); color: color(white);}
     &-gap {
-      width: 0.1rem; height: 1.6rem; margin: 0 1.2rem 0 0.8rem;
-      background-color: color(white); align-self: center;
+      width: 0.1rem; height: 1.6rem; margin: 0.2rem 1.2rem 0 0.8rem;
+      background-color: color(grey-400); align-self: center;
     }
   }
 }

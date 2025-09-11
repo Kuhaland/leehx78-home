@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom-navi">
+  <div class="bottom-navi" ref="bottomRef">
     <div class="btn-back" @click="goBack">
       <i class="icon-arrow-prev" ref="backIcon" @mouseenter="hoverBackEffect"/>
     </div>
@@ -14,13 +14,15 @@ export default {
 }
 </script>
 <script setup>
-import { ref } from "vue";
+import {nextTick, onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
 import { gsap } from "gsap";
 
+const bottomRef = ref(null);
 const router = useRouter();
 const backIcon = ref(null);
 const reloadIcon = ref(null);
+
 const goBack = () => {
   if (window.history.length > 1) {
     router.back()
@@ -46,6 +48,15 @@ const hoverReloadEffect = () => {
       {scale: 1.3, duration: 0.4, ease: 'bounce.out', yoyo: true, repeat: 1}
   );
 };
+
+onMounted(() => {
+  nextTick(() => {
+    gsap.fromTo(bottomRef.value,
+        { x: -100, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.6, delay: 0.5, ease: 'power3.out' }
+    );
+  });
+});
 </script>
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
