@@ -101,14 +101,16 @@ onBeforeUnmount(() => {
 @use '@/assets/scss/variable' as *;
 .sample-container {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
-  width: 100%; height: 100vh; background-color: color(grey-700);
+  width: 100%; height: 100vh;
+  background: #2A7B9B;
+  background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
   .text {
     flex: 1; width: 100%; padding: 5%;
     font-size: clamp(2rem, 12rem, 5vw); color: color(white); line-height: 1.2; text-align: center;
     box-sizing: border-box; perspective: 50.0rem;
   }
   .button-wrapper {
-    display: flex; align-items: center; justify-content: center; gap: 1.0rem; padding: 16.0rem 0 8.0rem;
+    display: flex; align-items: center; justify-content: center; gap: 1.0rem; padding: 22.0rem 0 1rem;
     .button {
       padding: 0.6em 1.2em; background: color(white); border-radius: 1.2rem;
       font-size: clamp(2rem, 2rem, 5vw); cursor: pointer; transition: all 0.2s ease;
