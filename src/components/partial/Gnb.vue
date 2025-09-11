@@ -24,12 +24,19 @@ const props = defineProps({
   title: {type: String, default: ''}
 })
 
-const gnbContent = ref([
-  {title: 'Home', link: '/'},
-  {title: 'Scroll', link: '/gsap/SampleScroll'},
-  {title: 'Observer', link: '/gsap/SampleObserver'},
-  {title: 'TextSplit', link: '/gsap/SampleTextSplit'},
-])
+const gnbContent = ref([]);
+if (location.pathname.startsWith('/gsap')) {
+  gnbContent.value = [
+    { title: 'Home', link: '/' },
+    { title: 'Scroll', link: '/gsap/SampleScroll' },
+    { title: 'Observer', link: '/gsap/SampleObserver' },
+    { title: 'TextSplit', link: '/gsap/SampleTextSplit' },
+  ];
+} else {
+  gnbContent.value = [
+    { title: 'GSAP', link: '/gsap/Index' },
+  ];
+}
 
 const gnbRef = ref(null);
 
@@ -77,7 +84,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
 header {
-  position: fixed; top: 0; z-index: 3;
+  position: fixed; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   width: 100%; height: 10rem; padding: 0 5%;
   font-size: clamp(0.66rem, 2vw, 1rem); letter-spacing: -0.05rem;
