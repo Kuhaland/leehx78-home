@@ -27,6 +27,7 @@ const props = defineProps({
 const gnbContent = ref([
   {title: 'Home', link: '/'},
   {title: 'Scroll', link: '/gsap/SampleScroll'},
+  {title: 'Observer', link: '/gsap/SampleObserver'},
   {title: 'TextSplit', link: '/gsap/SampleTextSplit'},
 ])
 

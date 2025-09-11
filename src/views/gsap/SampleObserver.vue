@@ -1,5 +1,5 @@
 <template>
-  <top-navi/>
+  <gnb/>
   <!-- Content -->
   <div :class="['section-wrap', getSection(idx)]"
        v-for="(item, idx) in sectionList"
@@ -22,7 +22,7 @@ export default {
 </script>
 <script setup>
 import { onMounted, nextTick } from 'vue';
-import TopNavi from "@/components/partial/Gnb.vue";
+import Gnb from "@/components/partial/Gnb.vue";
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';
@@ -131,13 +131,6 @@ function gotoSection(index, direction) {
 
 <style lang="scss" scoped>
 @use "@/assets/scss/variable" as *;
-
-header {
-  position: fixed; z-index: 3;
-  display: flex; align-items: center; justify-content: space-between;
-  width: 100%; height: 7em; padding: 0 5%;
-  font-size: clamp(0.66rem, 2vw, 1rem);letter-spacing: 0.5em;
-}
 
 .section-wrap {
   visibility: hidden; position: fixed; top: 0; width: 100%; height: 100%;
