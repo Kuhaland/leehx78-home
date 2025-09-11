@@ -16,7 +16,9 @@ $font-sizes: (
         24: 2.4rem,
         26: 2.6rem,
         28: 2.8rem,
-        30: 3.0rem
+        30: 3.0rem,
+        40: 4.0rem,
+        50: 5.0rem,
 ) !default;
 
 @function font-size($key) {
