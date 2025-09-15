@@ -1,6 +1,12 @@
 <template>
   <header ref="gnbRef">
-    <h1>Leehx78</h1>
+    <h1 ref="logoEl"
+        @click="goHome"
+        @mouseenter="onHover"
+        @mouseleave="onLeave"
+    >
+      {{ logoText }}
+    </h1>
     <div class="header-title" v-if="props.title">{{ props.title }}</div>
     <div class="header-item">
       <template v-for="(item, idx) in gnbContent">
@@ -17,17 +23,61 @@ export default {
 </script>
 <script setup>
 import { onMounted, ref, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import { gsap } from 'gsap';
+
+const router = useRouter();
 
 const props = defineProps({
   delay: {type: Number, default: 1.2,},
   title: {type: String, default: ''}
 })
 
+const logoText = ref('LeeHx78');
+const logoEl = ref(null);
+const goHome = () => {
+  if (location.pathname.startsWith('/gsap')) {
+    router.push('/');
+  } else {
+    location.reload();
+  }
+};
+const onHover = () => {
+  gsap.to(logoEl.value, {
+    opacity: 0,
+    scale: 1.1,
+    duration: 0.2,
+    ease: 'power1.out',
+    onComplete: () => {
+      logoText.value = location.pathname.startsWith('/gsap') ? '홈' : '새로고침';
+      gsap.to(logoEl.value, {
+        opacity: 1,
+        duration: 0.3,
+        ease: 'power1.out',
+      });
+    }
+  });
+};
+const onLeave = () => {
+  gsap.to(logoEl.value, {
+    opacity: 0,
+    scale: 1,
+    duration: 0.2,
+    ease: 'power1.in',
+    onComplete: () => {
+      logoText.value = 'LeeHx78';
+      gsap.to(logoEl.value, {
+        opacity: 1,
+        duration: 0.3,
+        ease: 'power1.in',
+      });
+    }
+  });
+}
+
 const gnbContent = ref([]);
 if (location.pathname.startsWith('/gsap')) {
   gnbContent.value = [
-    { title: 'Home', link: '/' },
     { title: 'Scroll', link: '/gsap/SampleScroll' },
     { title: 'Observer', link: '/gsap/SampleObserver' },
     { title: 'TextSplit', link: '/gsap/SampleTextSplit' },
@@ -87,16 +137,20 @@ header {
   position: fixed; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   width: 100%; height: 10rem; padding: 0 5%;
-  font-size: clamp(0.66rem, 2vw, 1rem); letter-spacing: -0.05rem;
-  h1 {font-size: font-size(26); font-weight: 700; color: color(grey-100); }
+  font-size: clamp(0.66rem, 2vw, 1rem);
+  h1 {
+    display: inline-flex; width: 128px; justify-content: center; align-items: center;
+    font-size: font-size(26); font-weight: 600; color: color(grey-100); letter-spacing: -0.1rem;
+    &:hover { cursor: pointer;}
+  }
   .header-title {
     position: absolute; left: 50%;
-    font-size: font-size(50); font-weight: 700; color: color(grey-100);
+    font-size: font-size(50); font-weight: 200; color: color(grey-100); text-transform: uppercase;
     transform: translateX(-50%);
   }
   .header-item {
     display: flex; align-items: center;
-    a { font-size: font-size(18); color: color(grey-100);}
+    a { font-family: 'Spoqa Han Sans Neo'; font-size: font-size(18); color: color(grey-100); letter-spacing: -0.01rem;}
     &-gap {
       width: 0.1rem; height: 1.6rem; margin: 0.2rem 1.2rem 0 1.2rem;
       background-color: color(grey-400); align-self: center;
