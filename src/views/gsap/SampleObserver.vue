@@ -1,5 +1,5 @@
 <template>
-  <gnb/>
+  <gnb title="Observer"/>
   <!-- Content -->
   <div :class="['section-wrap', getSection(idx)]"
        v-for="(item, idx) in sectionList"

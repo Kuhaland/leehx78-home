@@ -1,7 +1,7 @@
 <template>
   <gnb :delay="0.5"/>
   <div class="sample-container">
-    GSAP
+    <span ref="gsapRef">GSAP</span>
   </div>
   <bottom-navi/>
 </template>
@@ -11,8 +11,24 @@ export default {
 };
 </script>
 <script setup>
+import {onMounted, ref} from 'vue';
+import { gsap } from 'gsap';
 import BottomNavi from "@/components/unit/BottomNavi.vue";
 import Gnb from "@/components/partial/Gnb.vue";
+import { SplitText } from 'gsap/SplitText';
+gsap.registerPlugin(SplitText);
+
+const gsapRef = ref(null);
+onMounted(() => {
+  const split = new SplitText(gsapRef.value, { type: 'chars' });
+  gsap.from(split.chars, {
+    opacity: 0,
+    y: -150,
+    stagger: 0.05,
+    ease: 'elastic.out',
+    duration: 1.2,
+  });
+});
 
 </script>
 <style lang="scss" scoped>

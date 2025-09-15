@@ -15,38 +15,52 @@ export default {
 };
 </script>
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, watch, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BottomNavi from "@/components/unit/BottomNavi.vue";
 import Gnb from "@/components/partial/Gnb.vue";
+
 gsap.registerPlugin(ScrollTrigger);
 
-onMounted(() => {
+const route = useRoute();
+
+const initScrollTrigger = () => {
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  ScrollTrigger.refresh();
+
   const boxes = gsap.utils.toArray('.box');
   boxes.forEach(box => {
     gsap.to(box, {
-      x: 1000,
+      x: 0,
       scrollTrigger: {
         trigger: box,
         scrub: true,
         start: "top bottom",
-        end: "bottom top"
+        end: "bottom top",
+        markers: false,
       }
-    })
+    });
   });
 
   gsap.from('.sample-container', {
     opacity: 0,
-    x: 1000,
+    x: 310,
     duration: 0.6,
     ease: 'power2.out'
   });
+};
+
+onMounted(async () => {
+  await nextTick();
+  initScrollTrigger();
 });
 
-const back = () => {
-  history.back();
-}
+watch(() => route.fullPath, async () => {
+  await nextTick();
+  initScrollTrigger();
+});
 </script>
 
 <style lang="scss" scoped>
