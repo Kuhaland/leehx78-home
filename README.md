@@ -1,5 +1,11 @@
-# Vue 3 + Vite
+### 📌 주요 프로젝트
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+#### 🏌️ SmartScore Golf ERP
+> Vue 3 기반의 골프장 운영 시스템
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+- ⛳ 컴포넌트 공통 작업 / 카테고리 가이드 페이지 마크업
+
+#### ✨ Leehx78 GitHub Page
+> 개인 포트폴리오
+
+🔗 [포트폴리오 사이트](https://kuhaland.github.io/)
