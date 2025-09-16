@@ -36,6 +36,6 @@ onMounted(() => {
 .sample-container {
   display: flex; justify-content: center; align-items: center; background-color: color(grey-700);
   width: 100%; height: 100vh;
-  font-size: font-size(120); font-weight: 700; color: color(white);
+  font-size: clamp(10rem, 8vw, 120rem); font-weight: 700; color: color(white);
 }
 </style>
