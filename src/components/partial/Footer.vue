@@ -1,7 +1,7 @@
 <template>
-  <footer ref="footerRef">
+  <footer ref="footerRef" class="footer">
     <div class="footer-logo" ref="logoRef">Sample</div>
-    <div class="footer-right" ref="copyRef">&copy; {{ year }} Sample. All rights reserved.</div>
+    <div class="footer-copy" ref="copyRef">&copy; {{ year }} Sample. All rights reserved.</div>
   </footer>
 </template>
 
@@ -56,11 +56,11 @@ onMounted(() => {
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
 
-footer {
-  display: flex; justify-content: space-between; align-items: center;
+.footer {
+  position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center;
   padding: clamp(1rem, 5vw, 4rem); font-size: 1.4rem; background-color: color(grey-900);
   color: color(grey-500);
-  .footer-logo { font-weight: 700; }
-  .footer-right { font-size: font-size(12); letter-spacing: -0.1px;}
+  &-logo { font-size: clamp(2rem, 2vw, 2.8rem); font-weight: 700; }
+  &-copy { font-size: clamp(1.3rem, 2vw, 1.6rem); font-weight: 300; text-align: right; letter-spacing: -0.1px;}
 }
 </style>
