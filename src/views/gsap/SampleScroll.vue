@@ -46,7 +46,7 @@ const initScrollTrigger = () => {
 
   gsap.from('.sample-container', {
     opacity: 0,
-    x: 310,
+    x: 510,
     duration: 0.6,
     ease: 'power2.out'
   });

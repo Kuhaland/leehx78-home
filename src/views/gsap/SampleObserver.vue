@@ -150,7 +150,7 @@ function gotoSection(index, direction) {
   }
   $bg-gradient: linear-gradient( 180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.1) 100%);
   &.type1 .bg { background-image: $bg-gradient, url("https://assets.codepen.io/16327/site-landscape-1.jpg");}
-  &.type2 .bg { background-image: $bg-gradient, url("https://assets.codepen.io/16327/site-landscape-5.jpeg");}
+  &.type2 .bg { background-image: $bg-gradient, url("https://assets.codepen.io/16327/site-landscape-5.jpg");}
   &.type3 .bg { background-image: $bg-gradient, url("https://assets.codepen.io/16327/site-landscape-2.jpg");}
   &.type4 .bg { background-image: $bg-gradient, url("https://assets.codepen.io/16327/site-landscape-6.jpg");}
   &.type5 .bg { background-image: $bg-gradient, url("https://assets.codepen.io/16327/site-landscape-8.jpg"); background-position: 50% 45%; }
