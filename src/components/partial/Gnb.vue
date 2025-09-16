@@ -33,7 +33,7 @@ const props = defineProps({
   title: {type: String, default: ''}
 })
 
-const logoText = ref('LeeHx78');
+const logoText = ref('SAMPLE');
 const logoEl = ref(null);
 const goHome = () => {
   if (location.pathname.startsWith('/gsap')) {
@@ -65,7 +65,7 @@ const onLeave = () => {
     duration: 0.2,
     ease: 'power1.in',
     onComplete: () => {
-      logoText.value = 'LeeHx78';
+      logoText.value = 'SAMPLE';
       gsap.to(logoEl.value, {
         opacity: 1,
         duration: 0.3,
@@ -133,11 +133,11 @@ onMounted(async () => {
 </script>
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
+
 header {
   position: fixed; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; height: 10rem; padding: 0 5%;
-  font-size: clamp(0.66rem, 2vw, 1rem);
+  width: 100%; height: 10rem; padding: 0 clamp(1rem, 5vw, 4rem);
   h1 {
     display: inline-flex; width: 128px; justify-content: center; align-items: center;
     font-size: font-size(26); font-weight: 600; color: color(grey-100); letter-spacing: -0.1rem;
@@ -150,7 +150,7 @@ header {
   }
   .header-item {
     display: flex; align-items: center;
-    a { font-family: 'Spoqa Han Sans Neo'; font-size: font-size(18); color: color(grey-100); letter-spacing: -0.01rem;}
+    a { font-family: 'Spoqa Han Sans Neo', sans-serif; font-size: font-size(18); color: color(grey-100); letter-spacing: -0.01rem;}
     &-gap {
       width: 0.1rem; height: 1.6rem; margin: 0.2rem 1.2rem 0 1.2rem;
       background-color: color(grey-400); align-self: center;
