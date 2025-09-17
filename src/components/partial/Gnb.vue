@@ -7,7 +7,7 @@
     >
       {{ logoText }}
     </h1>
-    <div class="header-title" v-if="props.title">{{ props.title }}</div>
+    <div class="header-title" v-if="props.title && isWide">{{ props.title }}</div>
     <div class="header-item">
       <template v-for="(item, idx) in gnbContent">
         <router-link :to="item.link">{{ item.title }}</router-link>
@@ -22,7 +22,7 @@ export default {
 }
 </script>
 <script setup>
-import { onMounted, ref, nextTick } from "vue";
+import { onMounted, onBeforeUnmount, ref, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { gsap } from 'gsap';
 
@@ -129,6 +129,20 @@ onMounted(async () => {
     ease: 'power2.out',
     stagger: 0.2
   }, "<0.3");
+});
+
+const isWide = ref(window.innerWidth > 1200);
+
+const handleResize = () => {
+  isWide.value = window.innerWidth > 1200;
+};
+
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
 });
 </script>
 <style lang="scss" scoped>
