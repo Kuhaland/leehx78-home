@@ -1,7 +1,7 @@
 <template>
   <footer ref="footerRef" class="footer">
-    <div class="footer-logo" ref="logoRef">Sample</div>
-    <div class="footer-copy" ref="copyRef">&copy; {{ year }} by LEEHX78</div>
+    <div class="footer-logo" ref="logoRef">{{ gp.mainTitle }}</div>
+    <div class="footer-copy" ref="copyRef">&copy; {{ year }} by {{ gp.mainTitle }}</div>
   </footer>
 </template>
 
@@ -12,12 +12,13 @@ export default {
 </script>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, inject } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const gp = inject("$gp");
 const footerRef = ref(null);
 const logoRef = ref(null);
 const copyRef = ref(null);
