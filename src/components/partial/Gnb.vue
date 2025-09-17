@@ -78,7 +78,7 @@ const onLeave = () => {
 const gnbContent = ref([]);
 if (location.pathname.startsWith('/gsap')) {
   gnbContent.value = [
-    { title: 'Scroll', link: '/gsap/SampleScroll' },
+    { title: 'ScrollTrigger', link: '/gsap/SampleScroll' },
     { title: 'Observer', link: '/gsap/SampleObserver' },
     { title: 'TextSplit', link: '/gsap/SampleTextSplit' },
   ];
