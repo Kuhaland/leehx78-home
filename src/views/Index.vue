@@ -1,20 +1,24 @@
 <template>
+  <!-- GNB -->
   <gnb :delay="0.5" title=""/>
+  <!-- Content -->
   <div class="content">
-    <div class="content__hero">
-      <h1 class="content__heading gs_reveal">Reveal animations based on scroll direction</h1>
+    <!-- Content -->
+    <div class="content-top">
+      <h1 class="content-top-heading gs-reveal">Scroll Test Section</h1>
     </div>
-    <div class="features">
-
-      <div class="features__item features__item--left gs_reveal gs_reveal_fromLeft">
-        <div class="features__image">
-          <div class="features__card">
-            <img class="features__img" src="https://assets.codepen.io/16327/portrait-image-14.jpg" alt="">
+    <!-- Content -->
+    <div class="content-features">
+      <!-- Content -->
+      <div class="content-features-item left gs-reveal gs-reveal-fromLeft">
+        <div class="content-features-item-img">
+          <div class="card">
+            <img class="card-img" src="https://assets.codepen.io/16327/portrait-image-14.jpg" alt="">
           </div>
         </div>
-        <div class="features__content">
-          <h2 class="features__title gs_reveal">Highway Vinyl Nights</h2>
-          <p class="features__description gs_reveal">
+        <div class="content-features-item-content">
+          <h2 class="content-features-item-content-title gs-reveal">Highway Vinyl Nights</h2>
+          <p class="content-features-item-content-description gs-reveal">
             The headlights hum along the painted lines<br>
             We twist the dial till static turns to choir<br>
             Your hand keeps time on the wheel and the night leans in<br>
@@ -22,16 +26,16 @@
           </p>
         </div>
       </div>
-
-      <div class="features__item features__item--right gs_reveal gs_reveal_fromRight">
-        <div class="features__image">
-          <div class="features__card">
-            <img class="features__img" src="https://assets.codepen.io/16327/portrait-image-4.jpg" alt="">
+      <!-- Content -->
+      <div class="content-features-item right gs-reveal gs-reveal-fromRight">
+        <div class="content-features-item-img">
+          <div class="card">
+            <img class="card-img" src="https://assets.codepen.io/16327/portrait-image-4.jpg" alt="">
           </div>
         </div>
-        <div class="features__content">
-          <h2 class="features__title gs_reveal">Last Diner on Route 9</h2>
-          <p class="features__description gs_reveal">
+        <div class="content-features-item-content">
+          <h2 class="content-features-item-content-title gs-reveal">Last Diner on Route 9</h2>
+          <p class="content-features-item-content-description gs-reveal">
             The coffee tastes like rainwater and luck<br>
             Neon flickers slow while the jukebox spins a waltz<br>
             We carve our names in steam on the window glass<br>
@@ -39,16 +43,16 @@
           </p>
         </div>
       </div>
-
-      <div class="features__item features__item--left gs_reveal gs_reveal_fromLeft">
-        <div class="features__image">
-          <div class="features__card">
-            <img class="features__img" src="https://assets.codepen.io/16327/portrait-image-3.jpg" alt="">
+      <!-- Content -->
+      <div class="content-features-item left gs-reveal gs-reveal-fromLeft">
+        <div class="content-features-item-img">
+          <div class="card">
+            <img class="card-img" src="https://assets.codepen.io/16327/portrait-image-3.jpg" alt="">
           </div>
         </div>
-        <div class="features__content">
-          <h2 class="features__title gs_reveal">Stardust Ballroom</h2>
-          <p class="features__description gs_reveal">
+        <div class="content-features-item-content">
+          <h2 class="content-features-item-content-title gs-reveal">Stardust Ballroom</h2>
+          <p class="content-features-item-content-description gs-reveal">
             Mirror tiles catch every hopeful face<br>
             Records spin thin silver threads through the dark<br>
             We move like planets pulled by quiet drums<br>
@@ -56,16 +60,16 @@
           </p>
         </div>
       </div>
-
-      <div class="features__item features__item--right gs_reveal gs_reveal_fromRight">
-        <div class="features__image">
-          <div class="features__card">
-            <img class="features__img" src="https://assets.codepen.io/16327/portrait-image-1.jpg" alt="">
+      <!-- Content -->
+      <div class="content-features-item right gs-reveal gs-reveal-fromRight">
+        <div class="content-features-item-img">
+          <div class="card">
+            <img class="card-img" src="https://assets.codepen.io/16327/portrait-image-1.jpg" alt="">
           </div>
         </div>
-        <div class="features__content">
-          <h2 class="features__title gs_reveal">Sky Without Borders</h2>
-          <p class="features__description gs_reveal">
+        <div class="content-features-item-content">
+          <h2 class="content-features-item-content-title gs-reveal">Sky Without Borders</h2>
+          <p class="content-features-item-content-description gs-reveal">
             Lay your worries down beneath the porchlight glow<br>
             The crickets stitch soft rhythm in the grass<br>
             We trade small dreams and make them loud together<br>
@@ -73,9 +77,11 @@
           </p>
         </div>
       </div>
-
+      <!-- Content -->
     </div>
   </div>
+  <!-- Footer -->
+  <bottom/>
 </template>
 <script>
 export default {
@@ -87,17 +93,18 @@ import { onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Gnb from "@/components/partial/Gnb.vue";
+import Bottom from "@/components/partial/Footer.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
 function animateFrom(elem, direction = 1) {
-  let x = 0, y = direction * 100;
+  let x = 0, y = direction * 300;
 
-  if (elem.classList.contains('gs_reveal_fromLeft')) {
-    x = -100;
+  if (elem.classList.contains('gs-reveal-fromLeft')) {
+    x = -300;
     y = 0;
-  } else if (elem.classList.contains('gs_reveal_fromRight')) {
-    x = 100;
+  } else if (elem.classList.contains('gs-reveal-fromRight')) {
+    x = 300;
     y = 0;
   }
 
@@ -121,15 +128,17 @@ function hide(elem) {
   gsap.set(elem, { autoAlpha: 0 });
 }
 
-onMounted(() => {
-  const elements = gsap.utils.toArray('.gs_reveal');
+onMounted(async () => {
+  await document.fonts.ready;
+
+  const elements = gsap.utils.toArray('.gs-reveal');
 
   elements.forEach(elem => {
     hide(elem);
 
     ScrollTrigger.create({
       trigger: elem,
-      // markers: true,
+      markers: false,
       onEnter: () => animateFrom(elem),
       onEnterBack: () => animateFrom(elem, -1),
       onLeave: () => hide(elem)
@@ -142,88 +151,36 @@ onMounted(() => {
 @use '@/assets/scss/variable' as *;
 
 .content {
-  width: 100%;
-  margin: 0 auto;
-  padding: 10rem;
+  display: flex; flex-direction: column; justify-content: center; width: 100%;
+  padding: 0 clamp(1rem, 5vw, 4rem);
   background-color: color(grey-800);
+  &-top {
+    display:flex; align-items:center; justify-content:center;
+    padding: clamp(20rem, 22vw, 40rem) clamp(1rem, 5vw, 4rem) clamp(12rem, 20vw, 34rem);
+    color: #a9ffd1;
+    &-heading { text-align: center; font-size: clamp(1rem, 6vw, 12rem); line-height: 1.1}
+  }
+  &-features {
+    display: flex; flex-direction: column; gap: 3rem;
+    &-item {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; padding: clamp(4vw, 8vw, 10vw) 0;
+      border-top: dashed 2px grey;
+      &.left { flex-direction: row; text-align: right;}
+      &.right { flex-direction: row-reverse;}
+      &-img {
+        flex: 1 1 40%; position: relative;
+        .card {
+          overflow: hidden; position: relative; aspect-ratio: 1 / 1; border-radius: clamp(0.8rem, 2vw, 2.0rem);
+          &-img { position: absolute; object-fit: cover; display: block; max-width: 100%;}
+        }
+      }
+      &-content {
+        flex: 1 1 55%;
+        &-title { font-size: clamp(1rem, 5vw, 6rem); color: color(grey-100); margin-block-end: 1rem;}
+        &-description { font-size: clamp(1rem, 2.5vw, 2rem); color: color(grey-400); line-height: 1.6;}
+      }
+    }
+  }
+  .gs-reveal { opacity: 0; visibility: hidden; will-change: transform, opacity;}
 }
-
-.content__hero {
-  height: 40vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.content__heading {
-  text-align: center;
-}
-
-.features {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-.features__item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2rem;
-  height: 100vh;
-  border-top: dashed 2px grey;
-}
-
-.features__item--left {
-  flex-direction: row;
-  text-align: right;
-}
-
-.features__item--right {
-  flex-direction: row-reverse;
-}
-
-.features__image {
-  flex: 1 1 40%;
-  position: relative;
-}
-
-.features__card {
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  aspect-ratio: 1 / 1;
-}
-
-.features__img {
-  max-width: 100%;
-  position: absolute;
-  object-fit: cover;
-  display: block;
-}
-
-.features__content {
-  flex: 1 1 55%;
-}
-
-.features__title {
-  font-size: 1.8em;
-  margin-block-end: 1rem;
-}
-
-.features__description {
-  line-height: 1.6;
-}
-
-/* GSAP animation reveal styles */
-.gs_reveal {
-  opacity: 0;
-  visibility: hidden;
-  will-change: transform, opacity;
-}
-
-.spacer {
-  height: 100vh;
-}
-
 </style>
