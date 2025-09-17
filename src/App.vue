@@ -3,6 +3,13 @@
 </template>
 
 <script setup>
+import {ref, provide} from "vue";
+
+const gp = {
+  mainTitle: ref('LEEHX78')
+};
+
+provide('$gp', gp);
 </script>
 
 <style lang="scss">
