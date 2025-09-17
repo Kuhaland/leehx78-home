@@ -1,16 +1,24 @@
 <template>
-  <header ref="gnbRef">
+  <header ref="gnbRef" class="header">
     <h1 ref="logoEl"
         @click="goHome"
         @mouseenter="onHover"
         @mouseleave="onLeave"
+        class="header-logo"
     >
       {{ logoText }}
     </h1>
     <div class="header-title" v-if="props.title && isWide">{{ props.title }}</div>
     <div class="header-item">
-      <template v-for="(item, idx) in gnbContent">
-        <router-link :to="item.link">{{ item.title }}</router-link>
+      <template v-for="(item, idx) in gnbContent" :key="idx">
+        <router-link :to="item.link"
+                     class="header-item-link"
+                     @mouseenter="onItemHover($event)"
+        >
+          <span v-for="(char, i) in item.title.split('')" :key="i" class="char">
+            {{ char }}
+          </span>
+        </router-link>
         <span class="header-item-gap" v-if="idx < gnbContent.length - 1"></span>
       </template>
     </div>
@@ -46,6 +54,7 @@ const goHome = () => {
     location.reload();
   }
 };
+
 const onHover = () => {
   gsap.to(logoEl.value, {
     opacity: 0,
@@ -69,7 +78,7 @@ const onLeave = () => {
     duration: 0.2,
     ease: 'power1.in',
     onComplete: () => {
-      logoText.value = 'SAMPLE';
+      logoText.value = 'LEEHX78';
       gsap.to(logoEl.value, {
         opacity: 1,
         duration: 0.3,
@@ -78,6 +87,28 @@ const onLeave = () => {
     }
   });
 }
+
+const onItemHover = (e) => {
+  const chars = e.currentTarget.querySelectorAll(".char");
+  const staggerEach = 0.08;
+  const upDuration = 0.1;
+  const downDuration = 0.1;
+
+  const tl = gsap.timeline();
+
+  tl.to(chars, {
+    y: -8,
+    duration: upDuration,
+    ease: "power2.out",
+    stagger: { each: staggerEach }
+  });
+  tl.to(chars, {
+    y: 0,
+    duration: downDuration,
+    ease: "power2.in",
+    stagger: { each: staggerEach }
+  }, `-=${chars.length * staggerEach - upDuration}`);
+};
 
 const gnbContent = ref([]);
 if (location.pathname.startsWith('/gsap')) {
@@ -152,23 +183,26 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
 
-header {
+.header {
   position: fixed; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   width: 100%; height: 10rem; padding: 0 clamp(1rem, 5vw, 4rem);
-  h1 {
+  &-logo {
     display: inline-flex; width: 130px; justify-content: center; align-items: center;
     font-size: font-size(26); font-weight: 600; color: color(grey-100); letter-spacing: -0.05rem;
     &:hover { cursor: pointer;}
   }
-  .header-title {
+  &-title {
     position: absolute; left: 50%;
     font-size: font-size(50); font-weight: 200; color: color(grey-100); text-transform: uppercase;
     transform: translateX(-50%);
   }
-  .header-item {
+  &-item {
     display: flex; align-items: center;
-    a { font-family: 'Spoqa Han Sans Neo', sans-serif; font-size: font-size(18); color: color(grey-100); letter-spacing: -0.01rem;}
+    &-link {
+      font-family: 'Spoqa Han Sans Neo', sans-serif; font-size: font-size(18); color: color(grey-100); letter-spacing: -0.01rem;
+      .char { display: inline-block; pointer-events: none;}
+    }
     &-gap {
       width: 0.1rem; height: 1.6rem; margin: 0.2rem 1.2rem 0 1.2rem;
       background-color: color(grey-400); align-self: center;
