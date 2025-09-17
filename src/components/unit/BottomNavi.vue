@@ -62,7 +62,7 @@ onMounted(() => {
 @use '@/assets/scss/variable' as *;
 
 .bottom-navi {
-  position: fixed; bottom: 20px; left: 20px; z-index: 10; display: flex; gap: 10px;
+  position: fixed; bottom: 20px; left: 20px; z-index: 100; display: flex; gap: 10px;
   [class^='btn-'] {
     display: inline-flex; justify-content: center; align-items: center;
     width: 60px; height: 60px; background-color: rgba(0,0,0,0.5); border-radius: 50%;
