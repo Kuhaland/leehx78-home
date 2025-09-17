@@ -2,7 +2,7 @@
   <!-- GNB -->
   <gnb title="Observer"/>
   <!-- Content -->
-  <div :class="['section-wrap', getSection(idx)]"
+  <div :class="['sample-container', getSection(idx)]"
        v-for="(item, idx) in sectionList"
        :key="idx"
   >
@@ -60,7 +60,7 @@ onMounted(async () => {
   await document.fonts.ready;
   await nextTick();
 
-  sections = document.querySelectorAll(".section-wrap");
+  sections = document.querySelectorAll(".sample-container");
   images = document.querySelectorAll(".bg");
   headings = gsap.utils.toArray(".section-heading");
   outerWrappers = gsap.utils.toArray(".outer");
@@ -151,7 +151,7 @@ function gotoSection(index, direction) {
 <style lang="scss" scoped>
 @use "@/assets/scss/variable" as *;
 
-.section-wrap {
+.sample-container {
   visibility: hidden; position: fixed; top: 0; width: 100%; height: 100%;
   .outer, .inner { overflow-y: hidden; width: 100%; height: 100%;}
   h2 {

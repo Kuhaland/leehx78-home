@@ -3,12 +3,12 @@
   <gnb :delay="0.5" title="Text Split"/>
   <!-- Content -->
   <div class="sample-container">
-    <div class="button-wrapper">
+    <div class="sample-container-button">
       <button @click="animate('chars')" class="button" :disabled="isAnimating">Characters</button>
       <button @click="animate('words')" class="button" :disabled="isAnimating">Words</button>
       <button @click="animate('lines')" class="button" :disabled="isAnimating">Lines</button>
     </div>
-    <div ref="textRef" class="text">
+    <div ref="textRef" class="sample-container-text">
       Break apart HTML text into characters, words, and/or lines for easy animation.
     </div>
   </div>
@@ -102,24 +102,24 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
+
 .sample-container {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
   width: 100%; height: 100vh;
-  background: #2A7B9B;
-  background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
-  .text {
-    flex: 1; width: 100%; padding: 5%;
-    font-size: clamp(2rem, 12rem, 5vw); color: color(white); line-height: 1.2; text-align: center;
-    box-sizing: border-box; perspective: 50.0rem;
-  }
-  .button-wrapper {
+  background-color: color(grey-800);
+  &-button {
     display: flex; align-items: center; justify-content: center; gap: 1.0rem; padding: 22.0rem 0 1rem;
     .button {
-      padding: 0.6em 1.2em; background: color(white); border-radius: 1.2rem;
+      width: clamp(14rem, 8vw, 18rem); height: 6rem; background: color(white); border-radius: 1.2rem;
       font-size: clamp(2rem, 2rem, 5vw); cursor: pointer; transition: all 0.2s ease;
       &:hover { animation: bounce 0.5s;}
       &:disabled { opacity: 0.6; pointer-events: none;}
     }
+  }
+  &-text {
+    flex: 1; width: 100%; padding: 5%;
+    font-size: clamp(2rem, 8vw, 5vw); color: color(white); line-height: 1.2; letter-spacing:  clamp(0rem, 8vw, -0.3vw); text-align: center;
+    box-sizing: border-box; perspective: 50.0rem;
   }
 }
 @keyframes bounce {
