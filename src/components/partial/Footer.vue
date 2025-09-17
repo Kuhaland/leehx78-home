@@ -1,7 +1,7 @@
 <template>
   <footer ref="footerRef" class="footer">
     <div class="footer-logo" ref="logoRef">Sample</div>
-    <div class="footer-copy" ref="copyRef">&copy; {{ year }} Sample. All rights reserved.</div>
+    <div class="footer-copy" ref="copyRef">&copy; {{ year }} by LEEHX78</div>
   </footer>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -24,7 +24,10 @@ const copyRef = ref(null);
 const today = new Date();
 const year = today.getFullYear();
 
-onMounted(() => {
+let ctx;
+onMounted(async () => {
+  await document.fonts.ready;
+
   gsap.set(logoRef.value, { x: -100, opacity: 0 });
   gsap.set(copyRef.value, { x: 100, opacity: 0 });
 
@@ -33,6 +36,8 @@ onMounted(() => {
     start: "top bottom",
     marker: true,
     onEnter: (self) => {
+      if (!logoRef.value || !copyRef.value) return;
+
       gsap.timeline()
           .to(logoRef.value, {
             x: 0,
@@ -50,6 +55,9 @@ onMounted(() => {
     },
   });
   ScrollTrigger.refresh();
+});
+onBeforeUnmount(() => {
+  if (ctx) ctx.revert();
 });
 </script>
 
