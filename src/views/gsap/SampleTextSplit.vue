@@ -1,5 +1,7 @@
 <template>
+  <!-- GNB -->
   <gnb :delay="0.5" title="Text Split"/>
+  <!-- Content -->
   <div class="sample-container">
     <div class="button-wrapper">
       <button @click="animate('chars')" class="button" :disabled="isAnimating">Characters</button>
@@ -10,6 +12,7 @@
       Break apart HTML text into characters, words, and/or lines for easy animation.
     </div>
   </div>
+  <!-- Navigation -->
   <bottom-navi/>
 </template>
 <script>

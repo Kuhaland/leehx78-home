@@ -1,4 +1,5 @@
 <template>
+  <!-- GNB -->
   <gnb title="Observer"/>
   <!-- Content -->
   <div :class="['section-wrap', getSection(idx)]"
@@ -13,6 +14,8 @@
       </div>
     </div>
   </div>
+  <!-- Navigation -->
+  <bottom-navi />
 </template>
 
 <script>
@@ -26,6 +29,7 @@ import Gnb from "@/components/partial/Gnb.vue";
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';
+import BottomNavi from "@/components/unit/BottomNavi.vue";
 
 gsap.registerPlugin(Observer, SplitText);
 
