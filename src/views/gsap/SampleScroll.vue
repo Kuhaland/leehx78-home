@@ -1,13 +1,89 @@
 <template>
-  <gnb :delay="0.5" title="Scroll"/>
-  <div class="sample-container">
-    <div class="box-group">
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
+  <!-- GNB -->
+  <gnb :delay="0.5" title="Scroll Trigger"/>
+  <!-- Content -->
+  <div class="content">
+    <!-- Content -->
+    <div class="content-top">
+      <h1 class="content-top-heading gs-reveal">Scroll Test Section</h1>
+    </div>
+    <!-- Content -->
+    <div class="content-features">
+      <!-- Content -->
+      <div class="content-features-item left gs-reveal gs-reveal-fromLeft">
+        <div class="content-features-item-img">
+          <div class="card">
+            <img class="card-img" src="https://assets.codepen.io/16327/portrait-image-14.jpg" alt="">
+          </div>
+        </div>
+        <div class="content-features-item-content">
+          <h2 class="content-features-item-content-title gs-reveal">Highway Vinyl Nights</h2>
+          <p class="content-features-item-content-description gs-reveal">
+            The headlights hum along the painted lines<br>
+            We twist the dial till static turns to choir<br>
+            Your hand keeps time on the wheel and the night leans in<br>
+            Every mile is a chorus we have not written yet
+          </p>
+        </div>
+      </div>
+      <!-- Content -->
+      <div class="content-features-item right gs-reveal gs-reveal-fromRight">
+        <div class="content-features-item-img">
+          <div class="card">
+            <img class="card-img" src="https://assets.codepen.io/16327/portrait-image-4.jpg" alt="">
+          </div>
+        </div>
+        <div class="content-features-item-content">
+          <h2 class="content-features-item-content-title gs-reveal">Last Diner on Route 9</h2>
+          <p class="content-features-item-content-description gs-reveal">
+            The coffee tastes like rainwater and luck<br>
+            Neon flickers slow while the jukebox spins a waltz<br>
+            We carve our names in steam on the window glass<br>
+            Stay till sunrise and the road will wait its turn
+          </p>
+        </div>
+      </div>
+      <!-- Content -->
+      <div class="content-features-item left gs-reveal gs-reveal-fromLeft">
+        <div class="content-features-item-img">
+          <div class="card">
+            <img class="card-img" src="https://assets.codepen.io/16327/portrait-image-3.jpg" alt="">
+          </div>
+        </div>
+        <div class="content-features-item-content">
+          <h2 class="content-features-item-content-title gs-reveal">Stardust Ballroom</h2>
+          <p class="content-features-item-content-description gs-reveal">
+            Mirror tiles catch every hopeful face<br>
+            Records spin thin silver threads through the dark<br>
+            We move like planets pulled by quiet drums<br>
+            Hold the beat and the night will never close
+          </p>
+        </div>
+      </div>
+      <!-- Content -->
+      <div class="content-features-item right gs-reveal gs-reveal-fromRight">
+        <div class="content-features-item-img">
+          <div class="card">
+            <img class="card-img" src="https://assets.codepen.io/16327/portrait-image-1.jpg" alt="">
+          </div>
+        </div>
+        <div class="content-features-item-content">
+          <h2 class="content-features-item-content-title gs-reveal">Sky Without Borders</h2>
+          <p class="content-features-item-content-description gs-reveal">
+            Lay your worries down beneath the porchlight glow<br>
+            The crickets stitch soft rhythm in the grass<br>
+            We trade small dreams and make them loud together<br>
+            A sky without borders is waiting past the trees
+          </p>
+        </div>
+      </div>
+      <!-- Content -->
     </div>
   </div>
-  <bottom-navi/>
+  <!-- Navigation -->
+  <bottom-navi />
+  <!-- Footer -->
+  <bottom/>
 </template>
 <script>
 export default {
@@ -15,61 +91,97 @@ export default {
 };
 </script>
 <script setup>
-import { onMounted, watch, nextTick } from 'vue';
-import { useRoute } from 'vue-router';
+import { onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import BottomNavi from "@/components/unit/BottomNavi.vue";
 import Gnb from "@/components/partial/Gnb.vue";
+import Bottom from "@/components/partial/Footer.vue";
+import BottomNavi from "@/components/unit/BottomNavi.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const route = useRoute();
+function animateFrom(elem, direction = 1) {
+  let x = 0, y = direction * 300;
 
-const initScrollTrigger = () => {
-  ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-  ScrollTrigger.refresh();
+  if (elem.classList.contains('gs-reveal-fromLeft')) {
+    x = -300;
+    y = 0;
+  } else if (elem.classList.contains('gs-reveal-fromRight')) {
+    x = 300;
+    y = 0;
+  }
 
-  const boxes = gsap.utils.toArray('.box');
-  boxes.forEach(box => {
-    gsap.to(box, {
-      x: 0,
-      scrollTrigger: {
-        trigger: box,
-        scrub: true,
-        start: "top bottom",
-        end: "bottom top",
-        markers: false,
+  elem.style.transform = `translate(${x}px, ${y}px)`;
+  elem.style.opacity = '0';
+
+  gsap.fromTo(elem,
+      { x, y, autoAlpha: 0 },
+      {
+        duration: 1.25,
+        x: 0,
+        y: 0,
+        autoAlpha: 1,
+        ease: 'expo',
+        overwrite: 'auto'
       }
+  );
+}
+
+function hide(elem) {
+  gsap.set(elem, { autoAlpha: 0 });
+}
+
+onMounted(() => {
+  const elements = gsap.utils.toArray('.gs-reveal');
+
+  elements.forEach(elem => {
+    hide(elem);
+
+    ScrollTrigger.create({
+      trigger: elem,
+      markers: false,
+      onEnter: () => animateFrom(elem),
+      onEnterBack: () => animateFrom(elem, -1),
+      onLeave: () => hide(elem)
     });
   });
-
-  gsap.from('.sample-container', {
-    opacity: 0,
-    x: 510,
-    duration: 0.6,
-    ease: 'power2.out'
-  });
-};
-
-onMounted(async () => {
-  await nextTick();
-  initScrollTrigger();
-});
-
-watch(() => route.fullPath, async () => {
-  await nextTick();
-  initScrollTrigger();
 });
 </script>
 
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
-.sample-container {
-  display: flex; flex-direction: column; background-color: color(grey-700);
-  .box-group{
-    display: flex; flex-direction: column; padding-top: 100vh;
-    .box {display: inline-block; width: 10.0rem; height: 10.0rem; margin-bottom: 100vh; background-color: green;}
+
+.content {
+  display: flex; flex-direction: column; justify-content: center; width: 100%;
+  padding: 0 clamp(1rem, 5vw, 4rem);
+  background-color: color(grey-800);
+  &-top {
+    display:flex; align-items:center; justify-content:center;
+    padding: clamp(20rem, 22vw, 40rem) clamp(1rem, 5vw, 4rem) clamp(12rem, 20vw, 34rem);
+    color: #a9ffd1;
+    &-heading { text-align: center; font-size: clamp(1rem, 6vw, 12rem); line-height: 1.1}
   }
+  &-features {
+    display: flex; flex-direction: column; gap: 3rem;
+    &-item {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; padding: clamp(4vw, 8vw, 10vw) 0;
+      border-top: dashed 2px grey;
+      &.left { flex-direction: row; text-align: right;}
+      &.right { flex-direction: row-reverse;}
+      &-img {
+        flex: 1 1 40%; position: relative;
+        .card {
+          overflow: hidden; position: relative; aspect-ratio: 1 / 1; border-radius: clamp(0.8rem, 2vw, 2.0rem);
+          &-img { position: absolute; object-fit: cover; display: block; max-width: 100%;}
+        }
+      }
+      &-content {
+        flex: 1 1 55%;
+        &-title { font-size: clamp(1rem, 5vw, 6rem); color: color(grey-100); margin-block-end: 1rem;}
+        &-description { font-size: clamp(1rem, 2.5vw, 2rem); color: color(grey-400); line-height: 1.6;}
+      }
+    }
+  }
+  .gs-reveal { opacity: 0; visibility: hidden; will-change: transform, opacity;}
 }
 </style>
