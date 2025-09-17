@@ -33,8 +33,12 @@ const props = defineProps({
   title: {type: String, default: ''}
 })
 
-const logoText = ref('SAMPLE');
+const logoText = ref('LEEHX78');
 const logoEl = ref(null);
+if (location.pathname.startsWith('/gsap')) {
+  logoText.value = 'GSAP';
+}
+
 const goHome = () => {
   if (location.pathname.startsWith('/gsap')) {
     router.push('/');
@@ -153,8 +157,8 @@ header {
   display: flex; align-items: center; justify-content: space-between;
   width: 100%; height: 10rem; padding: 0 clamp(1rem, 5vw, 4rem);
   h1 {
-    display: inline-flex; width: 128px; justify-content: center; align-items: center;
-    font-size: font-size(26); font-weight: 600; color: color(grey-100); letter-spacing: -0.1rem;
+    display: inline-flex; width: 130px; justify-content: center; align-items: center;
+    font-size: font-size(26); font-weight: 600; color: color(grey-100); letter-spacing: -0.05rem;
     &:hover { cursor: pointer;}
   }
   .header-title {
