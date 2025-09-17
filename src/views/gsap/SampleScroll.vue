@@ -91,7 +91,7 @@ export default {
 };
 </script>
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, onBeforeUnmount, onActivated, onDeactivated, nextTick } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Gnb from "@/components/partial/Gnb.vue";
@@ -102,49 +102,75 @@ gsap.registerPlugin(ScrollTrigger);
 
 function animateFrom(elem, direction = 1) {
   let x = 0, y = direction * 300;
-
-  if (elem.classList.contains('gs-reveal-fromLeft')) {
-    x = -300;
-    y = 0;
-  } else if (elem.classList.contains('gs-reveal-fromRight')) {
-    x = 300;
-    y = 0;
-  }
+  if (elem.classList.contains('gs-reveal-fromLeft')) { x = -300; y = 0; }
+  else if (elem.classList.contains('gs-reveal-fromRight')) { x = 300; y = 0; }
 
   elem.style.transform = `translate(${x}px, ${y}px)`;
   elem.style.opacity = '0';
 
-  gsap.fromTo(elem,
-      { x, y, autoAlpha: 0 },
-      {
-        duration: 1.25,
-        x: 0,
-        y: 0,
-        autoAlpha: 1,
-        ease: 'expo',
-        overwrite: 'auto'
-      }
-  );
+  gsap.fromTo(elem, { x, y, autoAlpha: 0 }, {
+    duration: 1.1,
+    x: 0,
+    y: 0,
+    autoAlpha: 1,
+    ease: 'expo',
+    overwrite: 'auto'
+  });
 }
 
 function hide(elem) {
   gsap.set(elem, { autoAlpha: 0 });
 }
 
-onMounted(() => {
-  const elements = gsap.utils.toArray('.gs-reveal');
-
-  elements.forEach(elem => {
-    hide(elem);
-
-    ScrollTrigger.create({
-      trigger: elem,
-      markers: false,
-      onEnter: () => animateFrom(elem),
-      onEnterBack: () => animateFrom(elem, -1),
-      onLeave: () => hide(elem)
+function waitForImages(root = document) {
+  const imgs = Array.from(root.querySelectorAll('img')).filter(img => !img.complete);
+  if (!imgs.length) return Promise.resolve();
+  return new Promise(resolve => {
+    let done = 0;
+    const finish = () => (++done === imgs.length) && resolve();
+    imgs.forEach(img => {
+      img.addEventListener('load', finish, { once: true });
+      img.addEventListener('error', finish, { once: true });
     });
   });
+}
+
+let ctx;
+
+onMounted(async () => {
+  await nextTick();
+  try { await document.fonts?.ready; } catch (_) {}
+  await waitForImages(document.querySelector('.content'));
+
+  ctx = gsap.context(() => {
+    const elements = gsap.utils.toArray('.gs-reveal');
+
+    elements.forEach((elem) => {
+      hide(elem);
+      ScrollTrigger.create({
+        trigger: elem,
+        start: 'top 85%',
+        end: 'bottom top',
+        markers: false,
+        onEnter: () => animateFrom(elem),
+        onEnterBack: () => animateFrom(elem, -1),
+        onLeave: () => hide(elem)
+      });
+    });
+  });
+
+  ScrollTrigger.refresh();
+});
+
+onBeforeUnmount(() => {
+  ctx?.revert();
+});
+
+onActivated(() => {
+  ScrollTrigger.refresh();
+});
+onDeactivated(() => {
+  ctx?.revert();
 });
 </script>
 
@@ -157,7 +183,7 @@ onMounted(() => {
   background-color: color(grey-800);
   &-top {
     display:flex; align-items:center; justify-content:center;
-    padding: clamp(20rem, 22vw, 40rem) clamp(1rem, 5vw, 4rem) clamp(12rem, 20vw, 34rem);
+    padding: clamp(20rem, 20vw, 40rem) clamp(1rem, 5vw, 4rem) clamp(12rem, 20vw, 34rem);
     color: #a9ffd1;
     &-heading { text-align: center; font-size: clamp(1rem, 6vw, 12rem); line-height: 1.1}
   }
@@ -172,7 +198,7 @@ onMounted(() => {
         flex: 1 1 40%; position: relative;
         .card {
           overflow: hidden; position: relative; aspect-ratio: 1 / 1; border-radius: clamp(0.8rem, 2vw, 2.0rem);
-          &-img { position: absolute; object-fit: cover; display: block; max-width: 100%;}
+          &-img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover;}
         }
       }
       &-content {

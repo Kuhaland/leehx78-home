@@ -21,7 +21,7 @@ export default {
 };
 </script>
 <script setup>
-import { onMounted, nextTick } from 'vue';
+import { onMounted, onBeforeUnmount, nextTick, onActivated, onDeactivated } from 'vue';
 import Gnb from "@/components/partial/Gnb.vue";
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
@@ -50,8 +50,10 @@ let currentIndex = -1;
 let animating = false;
 
 let wrap;
+let observer;
 
 onMounted(async () => {
+  await document.fonts.ready;
   await nextTick();
 
   sections = document.querySelectorAll(".section-wrap");
@@ -69,7 +71,7 @@ onMounted(async () => {
   gsap.set(outerWrappers, { yPercent: 100 });
   gsap.set(innerWrappers, { yPercent: -100 });
 
-  Observer.create({
+  observer = Observer.create({
     type: "wheel,touch,pointer",
     wheelSpeed: -1,
     onDown: () => !animating && gotoSection(currentIndex - 1, -1),
@@ -79,6 +81,19 @@ onMounted(async () => {
   });
 
   gotoSection(0, 1);
+});
+
+onDeactivated(() => {
+  observer?.disable();
+});
+
+onActivated(() => {
+  observer?.enable();
+});
+
+onBeforeUnmount(() => {
+  observer?.kill();
+  observer = null;
 });
 
 function gotoSection(index, direction) {

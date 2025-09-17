@@ -19,7 +19,9 @@ import { SplitText } from 'gsap/SplitText';
 gsap.registerPlugin(SplitText);
 
 const gsapRef = ref(null);
-onMounted(() => {
+onMounted(async () => {
+  await document.fonts.ready;
+
   const split = new SplitText(gsapRef.value, { type: 'chars' });
   gsap.from(split.chars, {
     opacity: 0,
