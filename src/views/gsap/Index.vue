@@ -1,6 +1,6 @@
 <template>
   <gnb :delay="0.5"/>
-  <div class="sample-container">
+  <div class="sample-container overflow-h">
     <span ref="gsapRef">GSAP</span>
   </div>
   <bottom-navi/>
@@ -11,7 +11,7 @@ export default {
 };
 </script>
 <script setup>
-import {onMounted, ref} from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
 import { gsap } from 'gsap';
 import BottomNavi from "@/components/unit/BottomNavi.vue";
 import Gnb from "@/components/partial/Gnb.vue";
@@ -32,6 +32,13 @@ onMounted(async () => {
   });
 });
 
+onMounted(() => {
+  document.body.classList.add("overflow-h");
+});
+
+onUnmounted(() => {
+  document.body.classList.remove("overflow-h");
+});
 </script>
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
