@@ -1,9 +1,7 @@
 <template>
-  <gnb :delay="0.5"/>
   <div class="sample-container overflow-h">
     <span ref="gsapRef">GSAP</span>
   </div>
-  <bottom-navi/>
 </template>
 <script>
 export default {
@@ -13,9 +11,10 @@ export default {
 <script setup>
 import {onMounted, onUnmounted, ref} from 'vue';
 import { gsap } from 'gsap';
-import BottomNavi from "@/components/unit/BottomNavi.vue";
-import Gnb from "@/components/partial/Gnb.vue";
 import { SplitText } from 'gsap/SplitText';
+
+defineOptions({ name: "Index" });
+
 gsap.registerPlugin(SplitText);
 
 const gsapRef = ref(null);
@@ -44,7 +43,7 @@ onUnmounted(() => {
 @use '@/assets/scss/variable' as *;
 .sample-container {
   display: flex; justify-content: center; align-items: center;
-  width: 100%; height: 100vh; background-color: color(grey-700);
+  width: 100%; height: 100%;
   span { position: relative; z-index: 10; font-size: clamp(10rem, 8vw, 120rem); font-weight: 700; color: color(white);}
   &:before{
     content:""; position: absolute; top: -200%; left: -50%; width: 220%; height: 220%;

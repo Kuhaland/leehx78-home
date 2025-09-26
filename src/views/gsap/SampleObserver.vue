@@ -1,6 +1,4 @@
 <template>
-  <!-- GNB -->
-  <gnb title="Observer"/>
   <!-- Content -->
   <div :class="['sample-container', getSection(idx)]"
        v-for="(item, idx) in sectionList"
@@ -25,7 +23,6 @@ export default {
 </script>
 <script setup>
 import { onMounted, onBeforeUnmount, nextTick, onActivated, onDeactivated } from 'vue';
-import Gnb from "@/components/partial/Gnb.vue";
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';

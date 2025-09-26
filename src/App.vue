@@ -1,9 +1,12 @@
 <template>
-  <router-view/>
+  <layout>
+    <router-view/>
+  </layout>
 </template>
 
 <script setup>
 import {ref, provide} from "vue";
+import Layout from "@/components/layout/Layout.vue";
 
 const gp = {
   mainTitle: ref('LEEHX78')

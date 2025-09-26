@@ -5,16 +5,12 @@
   </footer>
 </template>
 
-<script>
-export default {
-  name: 'Footer',
-}
-</script>
-
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+defineOptions({ name: "Footer" });
 
 gsap.registerPlugin(ScrollTrigger);
 

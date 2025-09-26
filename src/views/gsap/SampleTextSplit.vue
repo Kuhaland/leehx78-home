@@ -1,6 +1,4 @@
 <template>
-  <!-- GNB -->
-  <gnb :delay="0.5" title="Text Split"/>
   <!-- Content -->
   <div class="sample-container">
     <div class="sample-container-button">
@@ -25,7 +23,6 @@ import { onMounted, onBeforeUnmount, ref } from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import BottomNavi from '@/components/unit/BottomNavi.vue';
-import Gnb from "@/components/partial/Gnb.vue";
 
 gsap.registerPlugin(SplitText);
 

@@ -1,6 +1,5 @@
 <template>
   <!-- GNB -->
-  <gnb :delay="0.5" title="Scroll Trigger"/>
   <!-- Content -->
   <div class="content">
     <!-- Content -->
@@ -94,8 +93,6 @@ export default {
 import { onMounted, onBeforeUnmount, onActivated, onDeactivated, nextTick } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Gnb from "@/components/partial/Gnb.vue";
-import Bottom from "@/components/partial/Footer.vue";
 import BottomNavi from "@/components/unit/BottomNavi.vue";
 
 gsap.registerPlugin(ScrollTrigger);

@@ -1,38 +1,36 @@
 <template>
-  <header ref="gnbRef" class="header">
+  <header ref="gnbRef" class="layout-header">
     <h1 ref="logoEl"
         @click="goHome"
         @mouseenter="onHover"
         @mouseleave="onLeave"
-        class="header-logo"
+        class="layout-header-logo"
     >
       {{ logoText }}
     </h1>
-    <div class="header-title" v-if="props.title && isWide">{{ props.title }}</div>
-    <div class="header-item">
+    <div class="layout-header-title" v-if="props.title && isWide">{{ props.title }}</div>
+    <div class="layout-header-item">
       <template v-for="(item, idx) in gnbContent" :key="idx">
         <router-link :to="item.link"
-                     class="header-item-link"
+                     class="layout-header-item-link"
                      @mouseenter="onItemHover($event)"
         >
           <span v-for="(char, i) in item.title.split('')" :key="i" class="char">
             {{ char }}
           </span>
         </router-link>
-        <span class="header-item-gap" v-if="idx < gnbContent.length - 1"></span>
+        <span class="layout-header-item-gap" v-if="idx < gnbContent.length - 1"></span>
       </template>
     </div>
   </header>
 </template>
-<script>
-export default {
-  name: 'Gnb',
-}
-</script>
+
 <script setup>
 import { onMounted, onBeforeUnmount, ref, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { gsap } from 'gsap';
+
+defineOptions({ name: "Header" });
 
 const router = useRouter();
 
@@ -46,7 +44,7 @@ const logoEl = ref(null);
 if (location.pathname.startsWith('/gsap')) {
   logoText.value = 'GSAP';
 }
-
+console.log(router.getRoutes());
 const goHome = () => {
   if (location.pathname.startsWith('/gsap')) {
     router.push('/');
@@ -119,7 +117,7 @@ if (location.pathname.startsWith('/gsap')) {
   ];
 } else {
   gnbContent.value = [
-    { title: 'GSAP', link: '/gsap/Index' },
+    { title: 'GSAP', link: '/gsap' },
   ];
 }
 
@@ -183,7 +181,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
 
-.header {
+.layout-header {
   position: fixed; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   width: 100%; height: 10rem; padding: 0 clamp(1rem, 5vw, 4rem);
