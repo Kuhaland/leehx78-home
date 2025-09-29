@@ -1,7 +1,7 @@
 <template>
-  <footer ref="footerRef" class="footer">
-    <div class="footer-logo" ref="logoRef">{{ gp.mainTitle }}</div>
-    <div class="footer-copy" ref="copyRef">&copy; {{ year }} by {{ gp.mainTitle }}</div>
+  <footer ref="footerRef" class="layout-footer">
+    <div class="layout-footer-logo" ref="logoRef">{{ gp.mainTitle }}</div>
+    <div class="layout-footer-copy" ref="copyRef">&copy; {{ year }} by {{ gp.mainTitle }}</div>
   </footer>
 </template>
 
@@ -61,7 +61,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
 
-.footer {
+.layout-footer {
   position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center;
   padding: clamp(1rem, 5vw, 4rem); font-size: 1.4rem; background-color: color(grey-900);
   color: color(grey-500);

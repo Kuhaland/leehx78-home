@@ -26,13 +26,14 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref, nextTick } from "vue";
-import { useRouter } from "vue-router";
+import { onMounted, onBeforeUnmount, ref, nextTick, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { gsap } from 'gsap';
 
 defineOptions({ name: "Header" });
 
 const router = useRouter();
+const route = useRoute();
 
 const props = defineProps({
   delay: {type: Number, default: 1.2,},
@@ -109,17 +110,25 @@ const onItemHover = (e) => {
 };
 
 const gnbContent = ref([]);
-if (location.pathname.startsWith('/gsap')) {
-  gnbContent.value = [
-    { title: 'ScrollTrigger', link: '/gsap/SampleScroll' },
-    { title: 'Observer', link: '/gsap/SampleObserver' },
-    { title: 'TextSplit', link: '/gsap/SampleTextSplit' },
-  ];
-} else {
-  gnbContent.value = [
-    { title: 'GSAP', link: '/gsap' },
-  ];
-}
+const updateMenu = () => {
+  if (route.path.startsWith("/gsap")) {
+    logoText.value = "GSAP";
+    gnbContent.value = [
+      { title: "ScrollTrigger", link: "/gsap/SampleScroll" },
+      { title: "Observer", link: "/gsap/SampleObserver" },
+      { title: "TextSplit", link: "/gsap/SampleTextSplit" },
+    ];
+  } else {
+    logoText.value = "LEEHX78";
+    gnbContent.value = [
+      { title: "GSAP", link: "/gsap" },
+    ];
+  }
+};
+updateMenu();
+watch(() => route.path, () => {
+  updateMenu();
+});
 
 const gnbRef = ref(null);
 
@@ -185,6 +194,7 @@ onBeforeUnmount(() => {
   position: fixed; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   width: 100%; height: 10rem; padding: 0 clamp(1rem, 5vw, 4rem);
+  background-color: rgba(45,47,52,0.3);
   &-logo {
     display: inline-flex; width: 130px; justify-content: center; align-items: center;
     font-size: font-size(26); font-weight: 600; color: color(grey-100); letter-spacing: -0.05rem;
