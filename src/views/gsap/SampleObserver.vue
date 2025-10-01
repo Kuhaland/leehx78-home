@@ -1,4 +1,6 @@
 <template>
+  <!-- Header -->
+  <Header delay="0.5"/>
   <!-- Content -->
   <div :class="['sample-container', getSection(idx)]"
        v-for="(item, idx) in sectionList"
@@ -12,21 +14,15 @@
       </div>
     </div>
   </div>
-  <!-- Navigation -->
-  <bottom-navi />
 </template>
-
-<script>
-export default {
-  name: 'SampleObserver',
-};
-</script>
 <script setup>
 import { onMounted, onBeforeUnmount, nextTick, onActivated, onDeactivated } from 'vue';
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';
-import BottomNavi from "@/components/unit/BottomNavi.vue";
+import Header from "@/components/layout/Header.vue";
+
+defineOptions({ name: "SampleObserver" });
 
 gsap.registerPlugin(Observer, SplitText);
 

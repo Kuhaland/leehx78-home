@@ -8,15 +8,12 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'BottomNavi'
-}
-</script>
 <script setup>
 import {nextTick, onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
 import { gsap } from "gsap";
+
+defineOptions({ name: "BottomNavi" });
 
 const bottomRef = ref(null);
 const router = useRouter();

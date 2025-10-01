@@ -1,5 +1,6 @@
 <template>
-  <!-- GNB -->
+  <!-- Header -->
+  <Header delay="0.5"/>
   <!-- Content -->
   <div class="content">
     <!-- Content -->
@@ -79,21 +80,17 @@
       <!-- Content -->
     </div>
   </div>
-  <!-- Navigation -->
-  <bottom-navi />
   <!-- Footer -->
-  <bottom/>
+  <Footer/>
 </template>
-<script>
-export default {
-  name: 'SampleScroll',
-};
-</script>
 <script setup>
 import { onMounted, onBeforeUnmount, onActivated, onDeactivated, nextTick } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import BottomNavi from "@/components/unit/BottomNavi.vue";
+import Footer from "@/components/layout/Footer.vue";
+import Header from "@/components/layout/Header.vue";
+
+defineOptions({ name: "SampleScroll" });
 
 gsap.registerPlugin(ScrollTrigger);
 

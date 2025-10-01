@@ -1,4 +1,6 @@
 <template>
+  <!-- Header -->
+  <Header delay="0.5"/>
   <!-- Content -->
   <div class="sample-container">
     <div class="sample-container-button">
@@ -10,19 +12,14 @@
       Break apart HTML text into characters, words, and/or lines for easy animation.
     </div>
   </div>
-  <!-- Navigation -->
-  <bottom-navi/>
 </template>
-<script>
-export default {
-  name: 'SampleTextSplit',
-};
-</script>
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import BottomNavi from '@/components/unit/BottomNavi.vue';
+import Header from "@/components/layout/Header.vue";
+
+defineOptions({ name: "SampleTextSplit" });
 
 gsap.registerPlugin(SplitText);
 

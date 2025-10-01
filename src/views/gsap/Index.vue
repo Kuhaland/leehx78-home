@@ -1,17 +1,19 @@
 <template>
+  <!-- Header -->
+  <Header delay="0.5"/>
+  <!-- Content -->
   <div class="sample-container overflow-h">
     <span ref="gsapRef">GSAP</span>
   </div>
+  <!-- Footer -->
+  <Footer/>
 </template>
-<script>
-export default {
-  name: 'Index',
-};
-</script>
 <script setup>
 import {onMounted, onUnmounted, ref} from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
+import Header from "@/components/layout/Header.vue";
+import Footer from "@/components/layout/Footer.vue";
 
 defineOptions({ name: "Index" });
 

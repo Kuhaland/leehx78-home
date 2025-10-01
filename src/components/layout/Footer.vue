@@ -1,4 +1,7 @@
 <template>
+  <!-- Bottom Navigation -->
+  <bottom-navi ref="naviRef"/>
+  <!-- Footer -->
   <footer ref="footerRef" class="layout-footer">
     <div class="layout-footer-logo" ref="logoRef">{{ gp.mainTitle }}</div>
     <div class="layout-footer-copy" ref="copyRef">&copy; {{ year }} by {{ gp.mainTitle }}</div>
@@ -6,9 +9,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, inject } from "vue";
+import { ref, onMounted, onBeforeUnmount, inject, watch } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import BottomNavi from "@/components/unit/BottomNavi.vue";
 
 defineOptions({ name: "Footer" });
 
@@ -18,43 +22,65 @@ const gp = inject("$gp");
 const footerRef = ref(null);
 const logoRef = ref(null);
 const copyRef = ref(null);
+const naviRef = ref(null);
+
 const today = new Date();
 const year = today.getFullYear();
 
-let ctx;
+
+const footerProgress = ref(0);
+
+let st;
 onMounted(async () => {
   await document.fonts.ready;
 
   gsap.set(logoRef.value, { x: -100, opacity: 0 });
   gsap.set(copyRef.value, { x: 100, opacity: 0 });
 
-  ScrollTrigger.create({
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: footerRef.value,
+      start: "top bottom",
+      toggleActions: "play none none none",
+    }
+  })
+      .to(logoRef.value, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" })
+      .to(copyRef.value, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.4");
+
+  st = ScrollTrigger.create({
     trigger: footerRef.value,
     start: "top bottom",
-    marker: true,
-    onEnter: (self) => {
-      if (!logoRef.value || !copyRef.value) return;
-
-      gsap.timeline()
-          .to(logoRef.value, {
-            x: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power3.out"
-          })
-          .to(copyRef.value, {
-            x: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power3.out"
-          }, "-=0.4")
-      self.kill();
-    },
+    end: "top+=120 bottom",
+    scrub: true,
+    onUpdate: (self) => {
+      footerProgress.value = self.progress;
+    }
   });
+
   ScrollTrigger.refresh();
 });
+
 onBeforeUnmount(() => {
-  if (ctx) ctx.revert();
+  if (st) st.kill();
+});
+
+watch(footerProgress, (val) => {
+  if (!naviRef.value) return;
+  if (val >= 1) {
+    gsap.to(naviRef.value.$el, {
+      y: 100,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power2.in"
+    });
+  } else {
+    gsap.to(naviRef.value.$el, {
+      y: 0,
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.out"
+    });
+  }
 });
 </script>
 

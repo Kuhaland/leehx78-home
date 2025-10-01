@@ -1,21 +1,28 @@
 <template>
-  <div class="layout-main">
-    <div class="layout-main-content" v-for="n in 100">
-      dfasfdafdsafs
-    </div>
+  <!-- Header -->
+  <Header delay="0.5"/>
+  <!-- Content -->
+  <div class="layout">
+    <div class="layout-content">index</div>
   </div>
+  <!-- Footer -->
+  <Footer/>
 </template>
-
 <script setup>
-defineOptions({ name: "Index" });
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Header from "@/components/layout/Header.vue";
+import Footer from "@/components/layout/Footer.vue";
+
+gsap.registerPlugin(ScrollTrigger);
 
 </script>
 
 <style lang="scss" scoped>
 @use '@/assets/scss/variable' as *;
 
-.layout-main {
-  display: flex; flex-direction: column; gap: 20px; padding: 140px 40px 40px;
+.layout {
+  display: flex; flex-direction: column; flex: 1; gap: 20px; padding: 140px 40px 40px;
   &-content { color: color(white)};
 }
 </style>
