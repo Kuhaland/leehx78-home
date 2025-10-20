@@ -49,6 +49,7 @@ const weatherList = ref([]);
 
 onMounted(async () => {
   weatherList.value = await fetchWeatherData();
+  console.log('[✅ fetchWeatherData 결과]', weatherList.value);
 });
 </script>
 

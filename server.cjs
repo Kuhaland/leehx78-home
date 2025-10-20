@@ -16,13 +16,19 @@ app.get('/api/weather', async (req, res) => {
       },
       responseType: 'text'
     });
+
+    console.log('[✅ 기상청 원본 응답 데이터]');
+    console.log(response.data);
+
     res.send(response.data);
   } catch (e) {
-    console.error('기상청 API 호출 실패:', e.message);
+    console.error('❌ 기상청 API 호출 실패');
+    console.error('[에러 메시지]', e.message);
+    console.error('[에러 응답]', e.response?.data); // 서버에서 어떤 메시지를 주었는지
     res.status(500).send('기상청 API 오류');
   }
 });
 
-app.listen(5173, () => {
-  console.log('✅ 프록시 서버 실행 중 → http://localhost:5173');
+app.listen(3001, () => {
+  console.log('✅ 프록시 서버 실행 중 → http://localhost:3001');
 });
