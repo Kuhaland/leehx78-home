@@ -1,6 +1,6 @@
 <template>
   <!-- Header -->
-  <Header delay="0.5"/>
+  <Header :delay="0.5"/>
   <!-- Content -->
   <div class="content">
     <!-- Content -->
