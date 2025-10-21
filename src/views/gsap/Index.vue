@@ -12,8 +12,8 @@
 import {onMounted, onUnmounted, ref} from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import Header from "@/components/layout/Header.vue";
-import Footer from "@/components/layout/Footer.vue";
+import Header from "../../components/layout/Header.vue";
+import Footer from "../../components/layout/Footer.vue";
 
 defineOptions({ name: "Index" });
 

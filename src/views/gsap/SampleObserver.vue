@@ -20,7 +20,7 @@ import { onMounted, onBeforeUnmount, nextTick, onActivated, onDeactivated } from
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';
-import Header from "@/components/layout/Header.vue";
+import Header from "../../components/layout/Header.vue";
 
 defineOptions({ name: "SampleObserver" });
 

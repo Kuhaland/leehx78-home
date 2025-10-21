@@ -87,8 +87,8 @@
 import { onMounted, onBeforeUnmount, onActivated, onDeactivated, nextTick } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Footer from "@/components/layout/Footer.vue";
-import Header from "@/components/layout/Header.vue";
+import Footer from "../../components/layout/Footer.vue";
+import Header from "../../components/layout/Header.vue";
 
 defineOptions({ name: "SampleScroll" });
 

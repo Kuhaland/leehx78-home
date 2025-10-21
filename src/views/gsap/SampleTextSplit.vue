@@ -17,7 +17,7 @@
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import Header from "@/components/layout/Header.vue";
+import Header from "../../components/layout/Header.vue";
 
 defineOptions({ name: "SampleTextSplit" });
 
