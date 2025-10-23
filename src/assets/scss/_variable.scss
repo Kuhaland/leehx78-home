@@ -49,7 +49,9 @@ $colors: (
         'grey-300': #cdd4de,
         'grey-200': #dde3ec,
         'grey-100': #eff3f8,
-        'grey-50': #f8f9fc
+        'grey-50': #f8f9fc,
+        /// Add
+        'ffcc00' : #ffcc00,
 ) !default;
 
 @function color($key) {

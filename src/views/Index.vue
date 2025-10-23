@@ -3,30 +3,50 @@
   <Header :delay="0.5"/>
   <!-- Content -->
   <div class="layout">
-    <div class="layout-content">
+    <div class="layout-content dp-f gap-40">
 
+      <!-- Weather -->
       <div class="weather-wrap">
-        <h2>기상청 실황 관측자료</h2>
-        <table v-if="weatherList && weatherList.length"
-               style="width: 1000px; border: 1px solid white"
-               class="mt-20"
-        >
+        <h2 class="fs-18">기상청 실황 관측자료 <span class="fs-14 ls-m-10" v-if="latestTime">({{ latestTime }})</span></h2>
+        <table v-if="weatherList && weatherList.length" class="mt-10">
           <thead>
           <tr>
-            <th class="fs-14 pv-10" style="border-bottom: 1px solid white;">관측시각</th>
-            <th class="fs-14 pv-10" style="border-left: 1px solid white; border-bottom: 1px solid white;">지점명</th>
-            <th class="fs-14 pv-10" style="border-left: 1px solid white; border-bottom: 1px solid white;">풍향</th>
-            <th class="fs-14 pv-10" style="border-left: 1px solid white; border-bottom: 1px solid white;">풍속</th>
-            <th class="fs-14 pv-10" style="border-left: 1px solid white; border-bottom: 1px solid white;">기온</th>
+            <th class="wmd-120">지점명</th>
+            <th>기온 (°C)</th>
+            <th>풍향 (16방위)</th>
+            <th>풍속 (m/s)</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item, i) in weatherList" :key="i">
-            <td class="fs-14">{{ item['관측시각'] }}</td>
-            <td class="fs-14" style="border-left: 1px solid white;">{{ item['지점명'] }}</td>
-            <td class="fs-14" style="border-left: 1px solid white;">{{ item['풍향'] }}</td>
-            <td class="fs-14" style="border-left: 1px solid white;">{{ item['풍속'] }}</td>
-            <td class="fs-14" style="border-left: 1px solid white;">{{ item['기온'] }}</td>
+            <td class="wd-120 fc-ffcc00">{{ item['지점명'] || '-' }}</td>
+            <td>{{ item['기온'] || '-' }}</td>
+            <td>{{ item['풍향'] || '-' }}</td>
+            <td>{{ item['풍속'] || '-' }}</td>
+          </tr>
+          </tbody>
+        </table>
+        <p v-else>데이터 불러오는 중...</p>
+      </div>
+
+      <!-- vilageForecast -->
+      <div class="weather-wrap">
+        <h2 class="fs-18">단기예보 (서울)</h2>
+        <table v-if="forecastList.length" class="mt-20">
+          <thead>
+          <tr>
+            <th>항목</th>
+            <th>예보시간</th>
+            <th>값</th>
+            <th>설명</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(item, i) in forecastList" :key="i">
+            <td>{{ item.category }}</td>
+            <td>{{ item.fcstDate }} {{ item.fcstTime }}</td>
+            <td>{{ item.fcstValue }}</td>
+            <td>{{ explainCategory(item.category, item.fcstValue) }}</td>
           </tr>
           </tbody>
         </table>
@@ -39,21 +59,47 @@
   <Footer/>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import axios from 'axios';
 import Header from "../components/layout/Header.vue";
 import Footer from "../components/layout/Footer.vue";
-import { fetchWeatherData } from '../api/weather';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const weatherList = ref([]);
+const forecastList = ref([]);
+
+const latestTime = computed(() => weatherList.value[0]?.['일시'] || '');
 
 onMounted(async () => {
-  const [data] = await Promise.all([fetchWeatherData()]);
-  weatherList.value = data;
-  console.log('[📦 weatherList]', weatherList.value);
+  const now = new Date();
+  const pad = (n) => n.toString().padStart(2, '0');
+  const tm = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}00`;
+
+  // 1. 실황 관측자료
+  try {
+    const res1 = await axios.get(`/api/weather`, {
+      params: { tm }
+    });
+    weatherList.value = res1.data;
+    console.log('[✅ 관측자료]', weatherList.value);
+  } catch (err) {
+    console.error('[❌ 관측자료 API 오류]', err);
+  }
+
+  // 2. 단기예보 (서울 좌표 nx=60, ny=127)
+  try {
+    const res2 = await axios.get(`/api/villageForecast`, {
+      params: { nx: 60, ny: 127 }
+    });
+    forecastList.value = res2.data;
+    console.log('[✅ 단기예보]', forecastList.value);
+  } catch (err) {
+    console.error('[❌ 단기예보 API 오류]', err.message);
+    console.error('[❌ 상세 응답]', err?.response?.data);
+  }
 });
 
 </script>

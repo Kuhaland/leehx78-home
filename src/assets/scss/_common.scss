@@ -418,11 +418,11 @@ $gap-list: (0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34
 .bd-white{border:1px solid color(white) $imt;}
 @each $bdName, $bdColor in $colors {
   @for $i from 1 through 10 {
-    .bd-#{$bdName}-#{$i}{border:0px + $i solid #{$bdColor} $imt;}
-    .bd-#{$bdName}-r#{$i}{border-right:0px + $i solid $bdColor $imt;}
-    .bd-#{$bdName}-l#{$i}{border-left:0px + $i solid $bdColor $imt;}
-    .bd-#{$bdName}-t#{$i}{border-top:0px + $i solid $bdColor $imt;}
-    .bd-#{$bdName}-b#{$i}{border-bottom:0px + $i solid $bdColor $imt;}
+    .bd-#{$bdName}-#{$i}{border:#{$i}px solid #{$bdColor} $imt;}
+    .bd-#{$bdName}-r#{$i}{border-right:#{$i}px solid #{$bdColor} $imt;}
+    .bd-#{$bdName}-l#{$i}{border-left:#{$i}px solid #{$bdColor} $imt;}
+    .bd-#{$bdName}-t#{$i}{border-top:#{$i}px solid #{$bdColor} $imt;}
+    .bd-#{$bdName}-b#{$i}{border-bottom:#{$i}px solid #{$bdColor} $imt;}
   }
   .bd-#{$bdName}{border:1px solid #{$bdColor} $imt;}
 }
