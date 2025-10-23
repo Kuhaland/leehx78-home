@@ -19,7 +19,7 @@
           </thead>
           <tbody>
           <tr v-for="(item, i) in weatherList" :key="i">
-            <td class="wd-120 fc-ffcc00">{{ item['지점명'] || '-' }}</td>
+            <td class="wd-120 fc-fffa7f">{{ item['지점명'] || '-' }}</td>
             <td>{{ item['기온'] || '-' }}</td>
             <td>{{ item['풍향'] || '-' }}</td>
             <td>{{ item['풍속'] || '-' }}</td>
@@ -29,10 +29,10 @@
         <p v-else>데이터 불러오는 중...</p>
       </div>
 
-      <!-- vilageForecast -->
+      <!-- VillageForecast -->
       <div class="weather-wrap">
         <h2 class="fs-18">단기예보 (서울)</h2>
-        <table v-if="forecastList.length" class="mt-20">
+        <table v-if="forecastList.length" class="mt-10">
           <thead>
           <tr>
             <th>항목</th>
@@ -44,13 +44,34 @@
           <tbody>
           <tr v-for="(item, i) in forecastList" :key="i">
             <td>{{ item.category }}</td>
-            <td>{{ item.fcstDate }} {{ item.fcstTime }}</td>
-            <td>{{ item.fcstValue }}</td>
-            <td>{{ explainCategory(item.category, item.fcstValue) }}</td>
+            <td>{{ item.obsrDate }} {{ item.obsrTime }}</td>
+            <td>{{ item.obsrValue }}</td>
+            <td>{{ item.description }}</td>
           </tr>
           </tbody>
         </table>
         <p v-else>데이터 불러오는 중...</p>
+      </div>
+
+      <!-- Subway -->
+      <div class="subway-wrap">
+        <h2 class="fs-18">실시간 지하철 도착 정보</h2>
+        <p class="fs-14">다음 갱신까지 ⏳ <strong>{{ countdown }}</strong>초</p>
+
+        <div v-if="subwayLoading">조회 중...</div>
+        <div v-if="subwayError" class="error">{{ subwayError }}</div>
+
+        <div v-for="station in subwayStations" :key="station" class="station-block mt-20">
+          <h3 class="fs-16 mb-4 pl-10">{{ station }}역</h3>
+          <ul v-if="subwayDataMap[station] && subwayDataMap[station].length" class="bd-white pa-20 bdr-12">
+            <li v-for="(item, i) in subwayDataMap[station]" :key="i" class="dp-f gap-4">
+              <strong class="fs-14 wd-260">{{ item.trainLineNm }}</strong>
+              <span class="fs-14">{{ item.arvlMsg2 }}</span>
+              <span class="fs-14">상태: {{ item.btrainSttus }} | 방향: {{ item.updnLine }}</span>
+            </li>
+          </ul>
+          <p v-else>데이터 없음</p>
+        </div>
       </div>
 
     </div>
@@ -59,7 +80,7 @@
   <Footer/>
 </template>
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axios from 'axios';
@@ -68,6 +89,7 @@ import Footer from "../components/layout/Footer.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/// 기상청 관련
 const weatherList = ref([]);
 const forecastList = ref([]);
 
@@ -81,7 +103,7 @@ onMounted(async () => {
   // 1. 실황 관측자료
   try {
     const res1 = await axios.get(`/api/weather`, {
-      params: { tm }
+      params: { tm,  }
     });
     weatherList.value = res1.data;
     console.log('[✅ 관측자료]', weatherList.value);
@@ -98,10 +120,60 @@ onMounted(async () => {
     console.log('[✅ 단기예보]', forecastList.value);
   } catch (err) {
     console.error('[❌ 단기예보 API 오류]', err.message);
-    console.error('[❌ 상세 응답]', err?.response?.data);
   }
 });
 
+/// 지하철 관련
+const subwayList = ref([]);
+const subwayStations = ref(['문정', '석촌', '노량진', '구일']);
+const subwayDataMap = ref({});
+const subwayLoading = ref(false);
+const subwayError = ref('');
+const countdown = ref(30);
+let refreshTimer = null;
+let countdownTimer = null;
+
+const fetchAllArrivalData = async () => {
+  subwayLoading.value = true;
+  subwayError.value = '';
+  subwayDataMap.value = {};
+
+  try {
+    for (const station of subwayStations.value) {
+      const res = await fetch(`/api/subway/${encodeURIComponent(station.trim())}`);
+      const data = await res.json();
+      if (data?.error) {
+        subwayDataMap.value[station] = [{ error: data.error }];
+      } else {
+        subwayDataMap.value[station] = data;
+      }
+    }
+  } catch (err) {
+    subwayError.value = '데이터 요청 중 오류가 발생했습니다.';
+  } finally {
+    subwayLoading.value = false;
+  }
+};
+
+const startCountdown = () => {
+  countdown.value = 30;
+  countdownTimer = setInterval(() => {
+    countdown.value--;
+    if (countdown.value <= 0) {
+      fetchAllArrivalData();
+      countdown.value = 30;
+    }
+  }, 1000);
+};
+
+onMounted(() => {
+  fetchAllArrivalData();
+  startCountdown();
+});
+
+onBeforeUnmount(() => {
+  if (countdownTimer) clearInterval(countdownTimer);
+});
 </script>
 
 <style lang="scss" scoped>

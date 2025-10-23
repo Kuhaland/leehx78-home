@@ -1,4 +1,3 @@
-// server/api/vilageForecast.js
 import express from 'express';
 import axios from 'axios';
 
@@ -7,7 +6,7 @@ const router = express.Router();
 // ⏱ base_date / base_time 계산 로직
 function getForecastTime() {
   const now = new Date();
-  now.setMinutes(now.getMinutes() - 30);
+  now.setMinutes(now.getMinutes() - 180);
   const yyyy = now.getFullYear();
   const mm = String(now.getMonth() + 1).padStart(2, '0');
   const dd = String(now.getDate()).padStart(2, '0');
@@ -43,7 +42,7 @@ router.get('/', async (req, res) => {
 
   try {
     const response = await axios.get(
-      'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst',
+      'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst',
       {
         params: {
           serviceKey: SERVICE_KEY,
@@ -62,17 +61,17 @@ router.get('/', async (req, res) => {
 
     const parsed = items.map((item) => ({
       category: item.category,
-      fcstDate: item.fcstDate,
-      fcstTime: item.fcstTime,
-      fcstValue: item.fcstValue,
-      description: explainCategory(item.category, item.fcstValue),
+      obsrDate: item.baseDate,
+      obsrTime: item.baseTime,
+      obsrValue: item.obsrValue,
+      description: explainCategory(item.category, item.obsrValue),
     }));
 
-    console.log('[✅ 초단기실황 데이터]', parsed.slice(0, 5));
-    res.json(parsed);
+    console.log('[✅ 초 단기 실황 데이터]', parsed);
+    res.status(200).json(parsed);
   } catch (e) {
-    console.error('[❌ 단기예보 API 오류]', e.message);
-    console.error('[❌ 응답 전체]', e?.response?.data || e);
+    console.error('[❌ 초 단기 실황 API 오류]', e.message);
+    console.error('[❌ 응답 전체]', JSON.stringify(e.response?.data || e.message));
     res.status(500).send('단기예보 API 오류');
   }
 });

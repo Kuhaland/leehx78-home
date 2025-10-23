@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
       '일시': item?.YYMMDDHHMI ? formatTime(item.YYMMDDHHMI) : '',
     }));
 
-    console.log('[✅ 최종 파싱 데이터]', result);
+    console.log('[✅ 실황 관측자료 데이터]', result);
     res.json(result);
   } catch (e) {
     console.error('[❌ API 호출 실패]', e.message);

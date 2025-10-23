@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import weatherRouter from '../api/weather.js';
 import villageForecastRouter from '../api/villageForecast.js';
+import subwayRouter from '../api/subway.js';
 
 const app = express();
 app.use(cors());
@@ -11,6 +12,9 @@ app.use('/api/weather', weatherRouter);
 
 // 단기예보 API 엔드포인트
 app.use('/api/villageForecast', villageForecastRouter);
+
+// 지하철 API 엔드포인트
+app.use('/api/subway', subwayRouter);
 
 const PORT = 3001;
 app.listen(PORT, () => {
