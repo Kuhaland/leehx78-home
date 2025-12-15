@@ -47,7 +47,9 @@ if (location.pathname.startsWith('/gsap')) {
 }
 console.log(router.getRoutes());
 const goHome = () => {
-  if (location.pathname.startsWith('/gsap')) {
+  const paths = ['/gsap', '/weather', '/subway'];
+
+  if (paths.some(path => location.pathname.startsWith(path))) {
     router.push('/');
   } else {
     location.reload();
@@ -55,13 +57,20 @@ const goHome = () => {
 };
 
 const onHover = () => {
+  const paths = ['/gsap', '/weather', '/subway'];
+
   gsap.to(logoEl.value, {
     opacity: 0,
     scale: 1.1,
     duration: 0.2,
     ease: 'power1.out',
     onComplete: () => {
-      logoText.value = location.pathname.startsWith('/gsap') ? '홈' : '새로고침';
+      const isHomePath = paths.some(path =>
+          location.pathname.startsWith(path)
+      );
+
+      logoText.value = isHomePath ? '홈' : '새로고침';
+
       gsap.to(logoEl.value, {
         opacity: 1,
         duration: 0.3,

@@ -3,10 +3,40 @@
   <Header :delay="0.5"/>
   <!-- Content -->
   <div class="layout">
-    <div class="layout-content dp-f flex-column gap-40">
+    <div class="layout-content dp-f gap-40">
 
-      <button class="fs-24 bd-white wd-300 pa-20 bdr-20" @click="goWeather">기상청 API 보기</button>
-      <button class="fs-24 bd-white wd-300 pa-20 bdr-20" @click="goSubway">실시간 지하철 정보 보기</button>
+      <!-- Subway -->
+      <div class="subway-wrap">
+        <h2 class="fs-18">실시간 지하철 도착 정보</h2>
+        <p class="fs-14">다음 갱신까지 ⏳ <strong>{{ countdown }}</strong>초</p>
+
+        <div v-if="subwayLoading">조회 중...</div>
+        <div v-if="subwayError" class="error">{{ subwayError }}</div>
+
+        <div class="grid-wrap gc-template-2 gcr-gap-20 mt-20">
+
+          <div v-for="station in subwayStations"
+               :key="station"
+               class="station-block"
+          >
+            <h3 class="fs-16 mb-4 pl-10">{{ station }}역</h3>
+            <ul v-if="subwayDataMap[station] && subwayDataMap[station].length"
+                class="bd-white pa-20 bdr-12"
+            >
+              <li v-for="(item, i) in subwayDataMap[station]"
+                  :key="i"
+                  class="dp-f gap-4"
+              >
+                <strong class="fs-14 wd-260">{{ item.trainLineNm }}</strong>
+                <span class="fs-14">{{ item.arvlMsg2 }}</span>
+                <span class="fs-14">상태: {{ item.btrainSttus }} | 방향: {{ item.updnLine }}</span>
+              </li>
+            </ul>
+            <p v-else>데이터 없음</p>
+          </div>
+
+        </div>
+      </div>
 
     </div>
   </div>
@@ -16,55 +46,12 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { gsap } from 'gsap';
-import { useRouter} from "vue-router";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axios from 'axios';
-import Header from "../components/layout/Header.vue";
-import Footer from "../components/layout/Footer.vue";
+import Header from "../../components/layout/Header.vue";
+import Footer from "../../components/layout/Footer.vue";
 
 gsap.registerPlugin(ScrollTrigger);
-const router = useRouter();
-
-const goWeather = () => {
-  router.push('/weather');
-};
-const goSubway = () => {
-  router.push('/subway');
-};
-
-/// 기상청 관련
-const weatherList = ref([]);
-const forecastList = ref([]);
-
-const latestTime = computed(() => weatherList.value[0]?.['일시'] || '');
-
-onMounted(async () => {
-  const now = new Date();
-  const pad = (n) => n.toString().padStart(2, '0');
-  const tm = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}00`;
-
-  // 1. 실황 관측자료
-  try {
-    const res1 = await axios.get(`/api/weather`, {
-      params: { tm,  }
-    });
-    weatherList.value = res1.data;
-    console.log('[✅ 관측자료]', weatherList.value);
-  } catch (err) {
-    console.error('[❌ 관측자료 API 오류]', err);
-  }
-
-  // 2. 단기예보 (서울 좌표 nx=60, ny=127)
-  try {
-    const res2 = await axios.get(`/api/villageForecast`, {
-      params: { nx: 60, ny: 127 }
-    });
-    forecastList.value = res2.data;
-    console.log('[✅ 단기예보]', forecastList.value);
-  } catch (err) {
-    console.error('[❌ 단기예보 API 오류]', err.message);
-  }
-});
 
 /// 지하철 관련
 const subwayList = ref([]);
@@ -120,7 +107,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-@use '../assets/scss/variable' as *;
+@use '../../assets/scss/variable' as *;
 
 .layout {
   display: flex; flex-direction: column; flex: 1; gap: 20px; padding: 140px 40px 40px;
