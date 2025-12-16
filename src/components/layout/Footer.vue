@@ -3,7 +3,7 @@
   <bottom-navi ref="naviRef"/>
   <!-- Footer -->
   <footer ref="footerRef" class="layout-footer">
-    <div class="layout-footer-logo" ref="logoRef">{{ gp.mainTitle }}</div>
+    <div class="layout-footer-logo" ref="logoRef">{{ footerTitle }}</div>
     <div class="layout-footer-copy" ref="copyRef">&copy; {{ year }} by {{ gp.mainTitle }}</div>
   </footer>
 </template>
@@ -26,8 +26,7 @@ const naviRef = ref(null);
 
 const today = new Date();
 const year = today.getFullYear();
-
-
+const footerTitle = 'Footer';
 const footerProgress = ref(0);
 
 let st;

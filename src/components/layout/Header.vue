@@ -40,7 +40,7 @@ const props = defineProps({
   title: {type: String, default: ''}
 })
 
-const logoText = ref('LEEHX78');
+const logoText = ref('Header');
 const logoEl = ref(null);
 if (location.pathname.startsWith('/gsap')) {
   logoText.value = 'GSAP';
@@ -86,7 +86,7 @@ const onLeave = () => {
     duration: 0.2,
     ease: 'power1.in',
     onComplete: () => {
-      logoText.value = 'LEEHX78';
+      logoText.value = 'Header';
       gsap.to(logoEl.value, {
         opacity: 1,
         duration: 0.3,
@@ -128,7 +128,7 @@ const updateMenu = () => {
       { title: "TextSplit", link: "/gsap/SampleTextSplit" },
     ];
   } else {
-    logoText.value = "LEEHX78";
+    logoText.value = "Header";
     gnbContent.value = [
       { title: "GSAP", link: "/gsap" },
     ];
