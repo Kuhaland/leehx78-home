@@ -126,6 +126,7 @@ const updateMenu = () => {
       { title: "ScrollTrigger", link: "/gsap/SampleScroll" },
       { title: "Observer", link: "/gsap/SampleObserver" },
       { title: "TextSplit", link: "/gsap/SampleTextSplit" },
+      { title: "Sample", link: "/gsap/SampleAnimation" },
     ];
   } else {
     logoText.value = "Header";

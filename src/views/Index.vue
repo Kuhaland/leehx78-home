@@ -5,8 +5,12 @@
   <div class="layout">
     <div class="layout-content dp-f flex-column gap-40">
 
-      <button class="fs-24 bd-white wd-300 pa-20 bdr-20" @click="goWeather">기상청 API 보기</button>
-      <button class="fs-24 bd-white wd-300 pa-20 bdr-20" @click="goSubway">실시간 지하철 정보 보기</button>
+      <button class="fs-24 bd-white wd-300 pa-20 bdr-20"
+              v-for="item in data.list"
+              @click="go(item.path)"
+      >
+        {{ item.title }}
+      </button>
 
     </div>
   </div>
@@ -14,109 +18,27 @@
   <Footer/>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import {reactive} from "vue";
 import { gsap } from 'gsap';
 import { useRouter} from "vue-router";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import axios from 'axios';
 import Header from "../components/layout/Header.vue";
 import Footer from "../components/layout/Footer.vue";
 
 gsap.registerPlugin(ScrollTrigger);
+
 const router = useRouter();
 
-const goWeather = () => {
-  router.push('/weather');
-};
-const goSubway = () => {
-  router.push('/subway');
-};
+const go = (path) => router.push(path);
 
-/// 기상청 관련
-const weatherList = ref([]);
-const forecastList = ref([]);
-
-const latestTime = computed(() => weatherList.value[0]?.['일시'] || '');
-
-onMounted(async () => {
-  const now = new Date();
-  const pad = (n) => n.toString().padStart(2, '0');
-  const tm = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}00`;
-
-  // 1. 실황 관측자료
-  try {
-    const res1 = await axios.get(`/api/weather`, {
-      params: { tm,  }
-    });
-    weatherList.value = res1.data;
-    console.log('[✅ 관측자료]', weatherList.value);
-  } catch (err) {
-    console.error('[❌ 관측자료 API 오류]', err);
-  }
-
-  // 2. 단기예보 (서울 좌표 nx=60, ny=127)
-  try {
-    const res2 = await axios.get(`/api/villageForecast`, {
-      params: { nx: 60, ny: 127 }
-    });
-    forecastList.value = res2.data;
-    console.log('[✅ 단기예보]', forecastList.value);
-  } catch (err) {
-    console.error('[❌ 단기예보 API 오류]', err.message);
-  }
+const data = reactive({
+  list: [
+    {title: 'GASP', path: '/gsap'},
+    {title: '기상청 API 보기', path: '/weather'},
+    {title: '실시간 지하철 정보 보기', path: '/subway'},
+  ]
 });
 
-/// 지하철 관련
-const subwayList = ref([]);
-const subwayStations = ref(['문정', '석촌', '노량진', '구일']);
-const subwayDataMap = ref({});
-const subwayLoading = ref(false);
-const subwayError = ref('');
-const countdown = ref(30);
-let refreshTimer = null;
-let countdownTimer = null;
-
-const fetchAllArrivalData = async () => {
-  subwayLoading.value = true;
-  subwayError.value = '';
-  subwayDataMap.value = {};
-
-  try {
-    for (const station of subwayStations.value) {
-      const res = await fetch(`/api/subway/${encodeURIComponent(station.trim())}`);
-      const data = await res.json();
-      if (data?.error) {
-        subwayDataMap.value[station] = [{ error: data.error }];
-      } else {
-        subwayDataMap.value[station] = data;
-      }
-    }
-  } catch (err) {
-    subwayError.value = '데이터 요청 중 오류가 발생했습니다.';
-  } finally {
-    subwayLoading.value = false;
-  }
-};
-
-const startCountdown = () => {
-  countdown.value = 30;
-  countdownTimer = setInterval(() => {
-    countdown.value--;
-    if (countdown.value <= 0) {
-      fetchAllArrivalData();
-      countdown.value = 30;
-    }
-  }, 1000);
-};
-
-onMounted(() => {
-  fetchAllArrivalData();
-  startCountdown();
-});
-
-onBeforeUnmount(() => {
-  if (countdownTimer) clearInterval(countdownTimer);
-});
 </script>
 
 <style lang="scss" scoped>
