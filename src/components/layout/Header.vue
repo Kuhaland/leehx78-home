@@ -147,7 +147,7 @@ const updateMenu = () => {
   }
 
   gnbContent.value = [
-    { title: "Gsap", link: "/gsap" },
+    { title: "GSAP", link: "/gsap" },
     { title: "Weather", link: "/api/weather" },
     { title: "Subway", link: "/api/subway" }
   ];
