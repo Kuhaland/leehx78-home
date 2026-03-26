@@ -105,7 +105,7 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-@use '../../../assets/scss/variable' as *;
+@use '@/assets/scss/variable' as *;
 
 .layout {
   display: flex; flex-direction: column; flex: 1; gap: 20px; padding: 140px 40px 40px;

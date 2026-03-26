@@ -1,7 +1,7 @@
 <template>
   <header ref="gnbRef" class="layout-header">
-    <h1
-        ref="logoEl"
+    <!-- Content -->
+    <h1 ref="logoEl"
         @click="goHome"
         @mouseenter="onHover"
         @mouseleave="onLeave"
@@ -9,45 +9,29 @@
     >
       {{ logoText }}
     </h1>
-
+    <!-- Content -->
     <div class="layout-header-title" v-if="props.title && isWide">
       {{ props.title }}
     </div>
-
+    <!-- Content -->
     <div class="layout-header-item">
+      <!-- Content -->
       <template v-for="(item, idx) in gnbContent" :key="idx">
-        <router-link
-            :to="item.link"
-            class="layout-header-item-link"
-            @mouseenter="onItemHover($event)"
+        <!-- Content -->
+        <router-link :to="item.link"
+                     class="layout-header-item-link"
+                     @mouseenter="onItemHover($event)"
         >
-          <span
-              v-for="(char, i) in item.title.split('')"
-              :key="i"
-              class="char"
-          >
-            {{ char }}
-          </span>
+          <span v-for="(char, i) in item.title.split('')" :key="i" class="char">{{ char }}</span>
         </router-link>
-
-        <span
-            class="layout-header-item-gap"
-            v-if="idx < gnbContent.length - 1"
-        ></span>
+        <span class="layout-header-item-gap" v-if="idx < gnbContent.length - 1"></span>
       </template>
     </div>
   </header>
 </template>
 
 <script setup>
-import {
-  onMounted,
-  onBeforeUnmount,
-  ref,
-  nextTick,
-  watch,
-  computed
-} from "vue";
+import {onMounted, onBeforeUnmount, ref, nextTick, watch, computed} from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { gsap } from "gsap";
 
@@ -72,9 +56,9 @@ const logoText = computed(() => {
 
   const path = route.path;
 
-  if (path.startsWith("/test/gsap")) return "GSAP";
-  if (path.startsWith("/test/weather")) return "Weather";
-  if (path.startsWith("/test/subway")) return "Subway";
+  if (path.startsWith("/sap")) return "GSAP";
+  if (path.startsWith("/api/weather")) return "Weather";
+  if (path.startsWith("/api/subway")) return "Subway";
 
   return "Home";
 });
@@ -93,9 +77,9 @@ const onHover = () => {
     onComplete: () => {
 
       const isHomePath =
-          route.path.startsWith("/test/gsap") ||
-          route.path.startsWith("/test/weather") ||
-          route.path.startsWith("/test/subway");
+          route.path.startsWith("/gsap") ||
+          route.path.startsWith("/api/weather") ||
+          route.path.startsWith("/api/subway");
 
       hoverText.value = isHomePath ? "홈" : "새로고침";
 
@@ -152,20 +136,20 @@ const gnbContent = ref([]);
 
 const updateMenu = () => {
 
-  if (route.path.startsWith("/test/gsap")) {
+  if (route.path.startsWith("/gsap")) {
     gnbContent.value = [
-      { title: "ScrollTrigger", link: "/test/gsap/SampleScroll" },
-      { title: "Observer", link: "/test/gsap/SampleObserver" },
-      { title: "TextSplit", link: "/test/gsap/SampleTextSplit" },
-      { title: "Sample", link: "/test/gsap/SampleAnimation" }
+      { title: "ScrollTrigger", link: "/gsap/SampleScroll" },
+      { title: "Observer", link: "/gsap/SampleObserver" },
+      { title: "TextSplit", link: "/gsap/SampleTextSplit" },
+      { title: "Sample", link: "/gsap/SampleAnimation" }
     ];
     return;
   }
 
   gnbContent.value = [
-    { title: "Gsap", link: "/test/gsap" },
-    { title: "Weather", link: "/test/weather" },
-    { title: "Subway", link: "/test/subway" }
+    { title: "Gsap", link: "/gsap" },
+    { title: "Weather", link: "/api/weather" },
+    { title: "Subway", link: "/api/subway" }
   ];
 };
 

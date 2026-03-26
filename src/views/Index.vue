@@ -12,7 +12,6 @@
   <Footer/>
 </template>
 <script setup>
-import {reactive} from "vue";
 import { gsap } from 'gsap';
 import { useRouter} from "vue-router";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -22,13 +21,6 @@ import Footer from "../components/layout/Footer.vue";
 gsap.registerPlugin(ScrollTrigger);
 
 const router = useRouter();
-
-const go = (path) => router.push(path);
-
-const data = reactive({
-
-});
-
 </script>
 
 <style lang="scss" scoped>
