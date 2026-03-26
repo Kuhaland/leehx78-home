@@ -10,8 +10,16 @@ router.get('/:station', async (req, res) => {
 
   try {
     const { data } = await axios.get(url);
+
+    // 전체 데이터 콘솔 출력
+    console.log("API 원본 데이터:", data);
+
+    // 지하철 도착 리스트만 출력
+    console.log("지하철 도착 정보:", data.realtimeArrivalList);
+
     res.json(data.realtimeArrivalList || []);
   } catch (err) {
+    console.error("API 호출 에러:", err);
     res.status(500).json({ error: '지하철 정보를 가져올 수 없습니다.' });
   }
 });
