@@ -1,28 +1,31 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
 
-const pages = import.meta.glob('@/views/**/*.vue', { eager: true });
+const pages = import.meta.glob('@/views/**/*.vue', { eager: true })
 
 const routes = Object.keys(pages).map((path) => {
-  const file = path.replace(/^.*\/views\//, '').replace('.vue', '');
-  const segments = file.split('/');
-  const last = segments[segments.length - 1];
+  const file = path.replace(/^.*\/views\//, '').replace('.vue', '')
+  const segments = file.split('/')
+  const last = segments[segments.length - 1]
 
-  let routePath;
+  let routePath
+
   if (last.toLowerCase() === 'index') {
-    routePath = '/' + segments.slice(0, -1).join('/');
-    if (routePath === '/') routePath = '/';
+    routePath = '/' + segments.slice(0, -1).join('/')
+    if (routePath === '/') routePath = '/'
   } else {
-    routePath = '/' + segments.join('/');
+    routePath = '/' + segments.join('/')
   }
 
   return {
     path: routePath,
     name: segments.join('-'),
-    component: pages[path].default,
-  };
-});
+    component: pages[path].default
+  }
+})
 
-export default createRouter({
-  history: createWebHistory(),
-  routes,
-});
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes
+})
+
+export default router

@@ -9,7 +9,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import gsap from "gsap";
-import Header from "../../components/layout/Header.vue";
+import Header from "@/components/layout/Header.vue";
 
 defineOptions({ name: "SampleAnimation" });
 

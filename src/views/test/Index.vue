@@ -22,8 +22,8 @@ import {reactive} from "vue";
 import { gsap } from 'gsap';
 import { useRouter} from "vue-router";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Header from "../components/layout/Header.vue";
-import Footer from "../components/layout/Footer.vue";
+import Header from "@/components/layout/Header.vue";
+import Footer from "@/components/layout/Footer.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,7 +42,7 @@ const data = reactive({
 </script>
 
 <style lang="scss" scoped>
-@use '../assets/scss/variable' as *;
+@use '@/assets/scss/variable' as *;
 
 .layout {
   display: flex; flex-direction: column; flex: 1; gap: 20px; padding: 140px 40px 40px;

@@ -5,12 +5,6 @@
   <div class="layout">
     <div class="layout-content dp-f flex-column gap-40">
 
-      <button class="fs-24 bd-white wd-300 pa-20 bdr-20"
-              v-for="item in data.list"
-              @click="go(item.path)"
-      >
-        {{ item.title }}
-      </button>
 
     </div>
   </div>
@@ -32,11 +26,7 @@ const router = useRouter();
 const go = (path) => router.push(path);
 
 const data = reactive({
-  list: [
-    {title: 'GASP', path: '/gsap'},
-    {title: '기상청 API 보기', path: '/weather'},
-    {title: '실시간 지하철 정보 보기', path: '/subway'},
-  ]
+
 });
 
 </script>

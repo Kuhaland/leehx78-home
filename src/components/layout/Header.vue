@@ -51,15 +51,15 @@ const logoText = computed(() => {
 
   const path = route.path;
 
-  if (path.startsWith("/gsap")) return "GSAP";
-  if (path.startsWith("/weather")) return "Weather";
-  if (path.startsWith("/subway")) return "Subway";
+  if (path.startsWith("/test/gsap")) return "GSAP";
+  if (path.startsWith("/test/weather")) return "Weather";
+  if (path.startsWith("/test/subway")) return "Subway";
 
   return "Home";
 });
 
 const goHome = () => {
-  const paths = ["/gsap", "/weather", "/subway"];
+  const paths = ["/test/gsap", "/test/weather", "/test/subway"];
 
   if (paths.some(path => location.pathname.startsWith(path))) {
     router.push("/");
@@ -69,7 +69,7 @@ const goHome = () => {
 };
 
 const onHover = () => {
-  const paths = ["/gsap", "/weather", "/subway"];
+  const paths = ["/test/gsap", "/test/weather", "/test/subway"];
 
   gsap.to(logoEl.value, {
     opacity: 0,
@@ -135,17 +135,30 @@ const onItemHover = (e) => {
 const gnbContent = ref([]);
 
 const updateMenu = () => {
-  if (route.path !== "/gsap") {
-    gnbContent.value = [];
+
+  // GSAP 페이지
+  if (route.path.startsWith("/test/gsap")) {
+    gnbContent.value = [
+      { title: "ScrollTrigger", link: "/test/gsap/SampleScroll" },
+      { title: "Observer", link: "/test/gsap/SampleObserver" },
+      { title: "TextSplit", link: "/test/gsap/SampleTextSplit" },
+      { title: "Sample", link: "/test/gsap/SampleAnimation" }
+    ];
     return;
   }
 
-  gnbContent.value = [
-    { title: "ScrollTrigger", link: "/gsap/SampleScroll" },
-    { title: "Observer", link: "/gsap/SampleObserver" },
-    { title: "TextSplit", link: "/gsap/SampleTextSplit" },
-    { title: "Sample", link: "/gsap/SampleAnimation" }
-  ];
+  // 홈 메뉴
+  if (route.path !== "/test/gsap") {
+    gnbContent.value = [
+      { title: "Gsap", link: "/test/gsap" },
+      { title: "Weather", link: "/test/weather" },
+      { title: "Subway", link: "/test/subway" }
+    ];
+    return;
+  }
+
+  // 그 외 페이지
+  gnbContent.value = [];
 };
 
 updateMenu();
