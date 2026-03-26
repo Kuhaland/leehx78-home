@@ -26,161 +26,198 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref, nextTick, watch } from "vue";
+import { onMounted, onBeforeUnmount, ref, nextTick, watch, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { gsap } from 'gsap';
+import { gsap } from "gsap";
 
 defineOptions({ name: "Header" });
 
 const router = useRouter();
 const route = useRoute();
 
-const props = defineProps({
-  delay: {type: Number, default: 1.2,},
-  title: {type: String, default: ''}
-})
-
-const logoText = ref('Header');
 const logoEl = ref(null);
-if (location.pathname.startsWith('/gsap')) {
-  logoText.value = 'GSAP';
-}
-console.log(router.getRoutes());
+const hoverText = ref(null);
+const gnbRef = ref(null);
+
+let ctx;
+
+const props = defineProps({
+  delay: { type: Number, default: 1.2 },
+  title: { type: String, default: "" }
+});
+
+const logoText = computed(() => {
+  if (hoverText.value) return hoverText.value;
+
+  const path = route.path;
+
+  if (path.startsWith("/gsap")) return "GSAP";
+  if (path.startsWith("/weather")) return "Weather";
+  if (path.startsWith("/subway")) return "Subway";
+
+  return "Home";
+});
+
 const goHome = () => {
-  const paths = ['/gsap', '/weather', '/subway'];
+  const paths = ["/gsap", "/weather", "/subway"];
 
   if (paths.some(path => location.pathname.startsWith(path))) {
-    router.push('/');
+    router.push("/");
   } else {
     location.reload();
   }
 };
 
 const onHover = () => {
-  const paths = ['/gsap', '/weather', '/subway'];
+  const paths = ["/gsap", "/weather", "/subway"];
 
   gsap.to(logoEl.value, {
     opacity: 0,
     scale: 1.1,
     duration: 0.2,
-    ease: 'power1.out',
+    ease: "power1.out",
     onComplete: () => {
+
       const isHomePath = paths.some(path =>
-          location.pathname.startsWith(path)
+          route.path.startsWith(path)
       );
 
-      logoText.value = isHomePath ? '홈' : '새로고침';
+      hoverText.value = isHomePath ? "홈" : "새로고침";
 
       gsap.to(logoEl.value, {
         opacity: 1,
         duration: 0.3,
-        ease: 'power1.out',
+        ease: "power1.out"
       });
     }
   });
 };
+
 const onLeave = () => {
   gsap.to(logoEl.value, {
     opacity: 0,
     scale: 1,
     duration: 0.2,
-    ease: 'power1.in',
+    ease: "power1.in",
     onComplete: () => {
-      logoText.value = 'Header';
+
+      hoverText.value = null;
+
       gsap.to(logoEl.value, {
         opacity: 1,
         duration: 0.3,
-        ease: 'power1.in',
+        ease: "power1.in"
       });
     }
   });
-}
+};
 
 const onItemHover = (e) => {
   const chars = e.currentTarget.querySelectorAll(".char");
-  const staggerEach = 0.08;
-  const upDuration = 0.1;
-  const downDuration = 0.1;
 
   const tl = gsap.timeline();
 
   tl.to(chars, {
     y: -8,
-    duration: upDuration,
+    duration: 0.1,
     ease: "power2.out",
-    stagger: { each: staggerEach }
+    stagger: { each: 0.08 }
   });
+
   tl.to(chars, {
     y: 0,
-    duration: downDuration,
+    duration: 0.1,
     ease: "power2.in",
-    stagger: { each: staggerEach }
-  }, `-=${chars.length * staggerEach - upDuration}`);
+    stagger: { each: 0.08 }
+  }, `-=${chars.length * 0.08 - 0.1}`);
 };
 
 const gnbContent = ref([]);
-const updateMenu = () => {
-  if (route.path.startsWith("/gsap")) {
-    logoText.value = "GSAP";
-    gnbContent.value = [
-      { title: "ScrollTrigger", link: "/gsap/SampleScroll" },
-      { title: "Observer", link: "/gsap/SampleObserver" },
-      { title: "TextSplit", link: "/gsap/SampleTextSplit" },
-      { title: "Sample", link: "/gsap/SampleAnimation" },
-    ];
-  } else {
-    logoText.value = "Header";
-    gnbContent.value = [
-      { title: "GSAP", link: "/gsap" },
-    ];
-  }
-};
-updateMenu();
-watch(() => route.path, () => {
-  updateMenu();
-});
 
-const gnbRef = ref(null);
+const updateMenu = () => {
+  if (route.path !== "/gsap") {
+    gnbContent.value = [];
+    return;
+  }
+
+  gnbContent.value = [
+    { title: "ScrollTrigger", link: "/gsap/SampleScroll" },
+    { title: "Observer", link: "/gsap/SampleObserver" },
+    { title: "TextSplit", link: "/gsap/SampleTextSplit" },
+    { title: "Sample", link: "/gsap/SampleAnimation" }
+  ];
+};
+
+updateMenu();
+
+watch(() => route.path, updateMenu);
 
 onMounted(async () => {
   await nextTick();
 
-  gsap.set(gnbRef.value, { opacity: 0 });
-  gsap.set(gnbRef.value.querySelector('h1'), { x: -50, opacity: 0 });
+  ctx = gsap.context(() => {
 
-  const titleEl = gnbRef.value.querySelector('.header-title');
-  if (titleEl) {
-    gsap.set(titleEl, { y: -50, opacity: 0 });
-  }
+    if (!gnbRef.value) return;
 
-  gsap.set(gnbRef.value.querySelectorAll('a, .header-item-gap'), { x: 50, opacity: 0 });
+    const h1 = gnbRef.value.querySelector("h1");
+    const titleEl = gnbRef.value.querySelector(".header-title");
 
-  const tl = gsap.timeline({ delay: props.delay });
+    const links = gsap.utils.toArray(
+        gnbRef.value.querySelectorAll("a, .header-item-gap")
+    );
 
-  tl.to(gnbRef.value, { opacity: 1, duration: 0.2 })
-      .to(gnbRef.value.querySelector('h1'), {
+    gsap.set(gnbRef.value, { opacity: 0 });
+
+    if (h1) gsap.set(h1, { x: -50, opacity: 0 });
+
+    if (titleEl) {
+      gsap.set(titleEl, { y: -50, opacity: 0 });
+    }
+
+    if (links.length) {
+      gsap.set(links, { x: 50, opacity: 0 });
+    }
+
+    const tl = gsap.timeline({ delay: props.delay });
+
+    tl.to(gnbRef.value, {
+      opacity: 1,
+      duration: 0.2
+    });
+
+    if (h1) {
+      tl.to(h1, {
         x: 0,
         opacity: 1,
         duration: 1.2,
-        ease: 'power2.out'
+        ease: "power2.out"
       }, "<");
+    }
 
-  if (titleEl) {
-    tl.to(titleEl, {
-      y: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: 'power2.out'
-    }, "<");
-  }
+    if (titleEl) {
+      tl.to(titleEl, {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power2.out"
+      }, "<");
+    }
 
-  tl.to(gnbRef.value.querySelectorAll('a, .header-item-gap'), {
-    x: 0,
-    opacity: 1,
-    duration: 0.8,
-    ease: 'power2.out',
-    stagger: 0.2
-  }, "<0.3");
+    if (links.length) {
+      tl.to(links, {
+        x: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.2
+      }, "<0.3");
+    }
+
+  }, gnbRef.value);
+});
+
+onBeforeUnmount(() => {
+  if (ctx) ctx.revert();
 });
 
 const isWide = ref(window.innerWidth > 1200);
