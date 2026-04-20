@@ -26,7 +26,7 @@ const naviRef = ref(null);
 
 const today = new Date();
 const year = today.getFullYear();
-const footerTitle = 'Footer';
+const footerTitle = '';
 const footerProgress = ref(0);
 
 let st;
