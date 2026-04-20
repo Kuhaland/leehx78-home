@@ -1,6 +1,6 @@
 import express from 'express';
 import axios from 'axios';
-import stationMap from '@/data/stationMap.js';
+import stationMap from '../../data/stationMap.js';
 
 const router = express.Router();
 

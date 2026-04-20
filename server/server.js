@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import weatherRouter from '../api/weather.js';
-import villageForecastRouter from '../api/villageForecast.js';
-import subwayRouter from '../api/subway.js';
+import dotenv from 'dotenv'
+import weatherRouter from './routes/weather.js';
+import villageForecastRouter from './routes/villageForecast.js';
+import subwayRouter from './routes/subway.js';
 
 const app = express();
 app.use(cors());
