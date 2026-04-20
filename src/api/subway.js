@@ -6,7 +6,7 @@ const API_KEY = '5856696b6c6176653631736a464767';
 
 router.get('/:station', async (req, res) => {
   const station = encodeURIComponent(req.params.station.trim());
-  const url = `http://swopenAPI.seoul.go.kr/api/subway/${API_KEY}/json/realtimeStationArrival/0/10/${station}`;
+  const url = `https://swopenAPI.seoul.go.kr/api/subway/${API_KEY}/json/realtimeStationArrival/0/10/${station}`;
 
   try {
     const { data } = await axios.get(url);

@@ -49,7 +49,7 @@ const hoverReloadEffect = () => {
 onMounted(() => {
   nextTick(() => {
     gsap.fromTo(bottomRef.value,
-        { x: -100, opacity: 0 },
+        { x: 140, opacity: 0 },
         { x: 0, opacity: 1, duration: 0.6, delay: 0.5, ease: 'power3.out' }
     );
   });
